@@ -16,7 +16,7 @@ class Doctor(DoctorCollection):
             self._dailyMinutes = int(doctor[Doctor.DOCT_DAILYMIN_IDX])
             self._weeklyHours = doctor[Doctor.DOCT_WEEKHOURS_IDX]
             self._doctor = [self._name, self._skill, self._nextFreeHours, self._dailyMinutes, self._weeklyHours]
-
+    # bello
     #setters
     def setDoctor(self, doctor):
         self._doctor = doctor     

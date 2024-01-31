@@ -2,14 +2,19 @@ from Helpers import *
 from DoctorCollection import *
 
 class Doctor(DoctorCollection):
+    DOCT_NAME_IDX = 0
+    DOCT_SKILL_IDX = 1
+    DOCT_FREEHOURS_IDX = 2
+    DOCT_DAILYMIN_IDX = 3
+    DOCT_WEEKHOURS_IDX = 4
     def __init__(self, filename):
         super().__init__(filename)
         for doctor in super().getDoctors():
-            self._name = doctor[0]
-            self._skill = int(doctor[1])
-            self._nextFreeHours = doctor[2]
-            self._dailyMinutes = int(doctor[3])
-            self._weeklyHours = doctor[4]
+            self._name = doctor[Doctor.DOCT_NAME_IDX]
+            self._skill = int(doctor[Doctor.DOCT_SKILL_IDX])
+            self._nextFreeHours = doctor[Doctor.DOCT_FREEHOURS_IDX]
+            self._dailyMinutes = int(doctor[Doctor.DOCT_DAILYMIN_IDX])
+            self._weeklyHours = doctor[Doctor.DOCT_WEEKHOURS_IDX]
             self._doctor = [self._name, self._skill, self._nextFreeHours, self._dailyMinutes, self._weeklyHours]
 
     #setters

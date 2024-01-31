@@ -74,7 +74,7 @@ class Doctor(DoctorCollection):
 
         return (-(self.getSkill()), -timeToPause, \
                 -timeToWeeklyPause, self.getName())                         #returning skill, time left to one hour pause, time left to weekly pause and the name
-# comment from the git
+
     #string
     def __str__(self):
         return f'{self.getDoctor()}'

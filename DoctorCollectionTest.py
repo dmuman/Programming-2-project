@@ -11,13 +11,9 @@ class DoctorCollectionTest:
     def readFile(self):
         with open(self.getFilename(), 'r', encoding='utf-8') as inFile:
             lines = inFile.readlines()
+            #print(lines)
 
-            headerTemp = lines[:7]
-            header = []
-
-            for line in headerTemp:
-                headerTemp = line.rstrip('\n')
-                header.append(headerTemp)
+            header = [line.rstrip() for line in lines[:7] if line.strip()]
 
             doctorsData = [line.strip().split(", ") for line in lines[7:] if line.strip()]
 

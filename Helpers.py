@@ -157,7 +157,35 @@ def updateHours(hoursToUpdate, minutesToAdd):
 
     return updatedHours
 
-    #testing part
-    if __name__ == "__main__":
-        import doctest
-        doctest.testmod()
+
+def sortDoctors(self):
+        """
+        Sorts doctors in decrescent order of their skills.
+        If they're the same - in decrescent order of time that's left until 1 hour pause.
+        If they're the same - in decrescent order of time that's left until weekly leave.
+        If they're the same - in the alphabetical order of the names.
+
+        Requires: doctorsList is a list of list, each list represents a doctor.
+
+        Ensures: tuple, containing the skill, time left unti 1 hour pause, 
+        time left unti weekly leave and name of the corresponding doctor.
+        """
+        if self.getDailyMinutes() > 240:                                    #checks if the daily worked minutes are greater than 240
+            timeToPause = 240*2 - self.getDailyMinutes()                    #if so, timeToPause will be 240*2(i.e. limit times 2) - daily worked minutes
+        else:                                                               #if it's not greater than 240(i.e. less than 240)
+            timeToPause = 240 - self.getDailyMinutes()                      #timeToPause will be 240(i.e. limit) - daily worked minutes
+
+        totalMinutesWeeklyWorked = (Helpers.hourToInt(self.getNextFreeHours()) * 60 \
+                        + Helpers.minutesToInt(self.getNextFreeHours()))    #gaining totalMinutes for weekly work
+        
+        timeToWeeklyPause = 40 * 60 - totalMinutesWeeklyWorked              #calculating the time left until weekly pause
+
+        return (-(self.getSkill()), -timeToPause, \
+                -timeToWeeklyPause, self.getName())                         #returning skill, time left to one hour pause, time left to weekly pause and the name
+
+
+#testing part
+    
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()

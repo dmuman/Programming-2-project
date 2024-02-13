@@ -5,6 +5,7 @@ class DoctorTest:
         self._nextFreeHours = nextFreeHours
         self._dailyMinutes = dailyMinutes
         self._weeklyHours = weeklyHours
+        self._doctor = [self.getName(), self.getSkill(), self.getNextFreeHours(), self.getDailyMinutes(), self.getWeeklyHours()]
 
     def setName(self, name):
         self._name = name
@@ -21,6 +22,9 @@ class DoctorTest:
     def setWeeklyHours(self, weeklyHours):
         self._weeklyHours = weeklyHours
 
+    def setDoctor(self, doctor):
+        self._doctor = doctor
+
     def getName(self):
         return self._name
     
@@ -36,5 +40,8 @@ class DoctorTest:
     def getWeeklyHours(self):
         return self._weeklyHours
     
+    def getDoctor(self):
+        return self._doctor
+    
     def __str__(self):
-        return f"Name: {self.getName()}, Skill: {self.getSkill()}, Next Free Hours: {self.getNextFreeHours()}, Daily Minutes: {self.getDailyMinutes()}, Weekly Hours: {self.getWeeklyHours()}"
+        return str(self.getDoctor())

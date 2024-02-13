@@ -38,3 +38,6 @@ doctors = DoctorCollectionTest('doctors10h00.txt')
 print(doctors.getHeader())
 print(doctors.getDoctorsData())
 print(doctors.getDoctors())
+#print(doctors.getDoctors()[0].__lt__(doctors.getDoctors()[1]))
+for doctor in doctors.getDoctors():
+    print(doctor[4])

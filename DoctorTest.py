@@ -64,5 +64,13 @@ class DoctorTest:
 
         return time
     
+    #TODO
+
+    def __lt__(self, other):
+        return (self.getWeeklyHours()[0]*60 + self.getWeeklyHours()[0]) < (other.getWeeklyHours()[0]*60 + other.getWeeklyHours()[0])
+
+    def __eq__(self, other):
+        pass
+    
     def __str__(self):
         return str(self.getDoctor())

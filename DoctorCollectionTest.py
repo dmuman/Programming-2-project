@@ -30,7 +30,7 @@ class DoctorCollectionTest:
         for data in self.getDoctorsData():
             name, skill, nextFreeHours, dailyMinutes, weeklyHours = data
             doctor = DoctorTest(name, skill, nextFreeHours, dailyMinutes, weeklyHours)
-            doctors.append(doctor.getDoctor())
+            doctors.append(doctor)
 
         return doctors
     
@@ -38,6 +38,9 @@ doctors = DoctorCollectionTest('doctors10h00.txt')
 print(doctors.getHeader())
 print(doctors.getDoctorsData())
 print(doctors.getDoctors())
-#print(doctors.getDoctors()[0].__lt__(doctors.getDoctors()[1]))
-for doctor in doctors.getDoctors():
-    print(doctor[4])
+
+
+print(doctors.getDoctors()[1].__lt__(doctors.getDoctors()[0]))
+print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))
+#for doctor in doctors.getDoctors():
+#   print(type(doctor))

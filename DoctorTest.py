@@ -29,19 +29,40 @@ class DoctorTest:
         return self._name
     
     def getSkill(self):
-        return self._skill
+        return int(self._skill)
 
     def getNextFreeHours(self):
-        return self._nextFreeHours
+        return self.timeToInt(self._nextFreeHours)
     
     def getDailyMinutes(self):
-        return self._dailyMinutes
+        return int(self._dailyMinutes)
     
     def getWeeklyHours(self):
-        return self._weeklyHours
+        return self.timeToInt(self._weeklyHours)
     
     def getDoctor(self):
         return self._doctor
+    
+    def timeToInt(self, time):
+        t = time.split("h")
+        hours = int(t[0])
+        minutes = int(t[1])
+
+        return [hours, minutes]
+    
+    def intToTime(self, hour, minutes):
+        h = str(hour)
+        m = str(minutes)
+
+        if hour < 10:
+            h = "0" + h
+
+        if minutes < 10 or minutes == 0:
+            m = "0" + m
+
+        time = f"{h}h{m}"
+
+        return time
     
     def __str__(self):
         return str(self.getDoctor())

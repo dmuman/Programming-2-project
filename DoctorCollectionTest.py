@@ -29,7 +29,7 @@ class DoctorCollectionTest:
         doctors = []
         for data in self.getDoctorsData():
             name, skill, nextFreeHours, dailyMinutes, weeklyHours = data
-            doctor = DoctorTest(name, int(skill), nextFreeHours, int(dailyMinutes), weeklyHours)
+            doctor = DoctorTest(name, skill, nextFreeHours, dailyMinutes, weeklyHours)
             doctors.append(doctor.getDoctor())
 
         return doctors

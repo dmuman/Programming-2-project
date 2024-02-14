@@ -44,6 +44,10 @@ class DoctorCollectionTest:
     def sortDoctors(self):
         self.getDoctors().sort(key = DoctorTest.sortDoctorsKeys)
 
+    def items(self):
+        for elem in self._doctors:
+            yield elem
+
     #TODO
 
     def writeDoctorsFile(self):

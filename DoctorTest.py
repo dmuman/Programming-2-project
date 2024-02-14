@@ -63,6 +63,17 @@ class DoctorTest:
         time = f"{h}h{m}"
 
         return time
+    
+    #TODO
+
+    def isDoctorFree(self):
+        pass
+
+    def updateDoctorsTime(self):
+        pass
+
+    def updateDoctors(self):
+        pass
 
     def __lt__(self, other):
         return (self.getWeeklyHours()[0]*60 + self.getWeeklyHours()[0]) < (other.getWeeklyHours()[0]*60 + other.getWeeklyHours()[0])

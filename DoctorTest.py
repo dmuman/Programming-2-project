@@ -63,7 +63,19 @@ class DoctorTest:
         time = f"{h}h{m}"
 
         return time
-    
+
+    def sortDoctorsKeys(self):
+        if self.getDailyMinutes() > 240:
+            timeToPause = 240*2 - self.getDailyMinutes()
+        else:
+            timeToPause = 240 - self.getDailyMinutes()
+
+        totalMinutesWeeklyWorked = (self.getWeeklyHours()[0]*60 + self.getWeeklyHours()[1])
+
+        timeToWeeklyPause = 40 * 60 - totalMinutesWeeklyWorked
+
+        return (-self.getSkill(), -timeToPause, -timeToWeeklyPause, self.getName())
+
     #TODO
 
     def isDoctorFree(self):

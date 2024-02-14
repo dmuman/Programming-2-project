@@ -40,11 +40,11 @@ class DoctorCollectionTest:
     
     def getDoctors(self):
         return self._doctors
-    
-    #TODO
 
     def sortDoctors(self):
-        pass
+        self.getDoctors().sort(key = DoctorTest.sortDoctorsKeys)
+
+    #TODO
 
     def writeDoctorsFile(self):
         pass
@@ -54,6 +54,8 @@ print(doctors.getHeader())
 print(doctors.getDoctorsData())
 print(doctors.getDoctors())
 
+doctors.sortDoctors()
+print(doctors.getDoctors())
 
 print(doctors.getDoctors()[1].__lt__(doctors.getDoctors()[0]))
 print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))

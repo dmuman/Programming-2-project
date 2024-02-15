@@ -46,7 +46,7 @@ class MotherTest:
     #TODO
 
     def __lt__(self, other):
-        return (self.getWeeklyHours()[0]*60 + self.getWeeklyHours()[0]) < (other.getWeeklyHours()[0]*60 + other.getWeeklyHours()[0])
+        return self.getAge() < other.getAge()
 
     def __eq__(self, other):
         return (

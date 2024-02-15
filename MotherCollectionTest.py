@@ -61,7 +61,7 @@ print(mothers.getMothers())
 mothers.sortMothers()
 print(mothers.getMothers())
 
-#print(doctors.getDoctors()[1].__lt__(doctors.getDoctors()[0]))
+#print(mothers.getMothers()[1].__lt__(mothers.getMothers()[0]))
 #print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))
 #for doctor in doctors.getDoctors():
 #   print(type(doctor))

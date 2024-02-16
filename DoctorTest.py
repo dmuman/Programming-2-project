@@ -104,23 +104,22 @@ class DoctorTest:
         hoursFromOldWeeklyHours, minutesFromOldWeeklyHours = oldWeeklyHours 
 
         if minutesFromOldHours < 30:
-            print('first if')                                            #checks if minutes from old hours are less then 30(time from the new schedule)
+            #print('first if')                                            #checks if minutes from old hours are less then 30(time from the new schedule)
             minutesFromOldHours = minutesFromOldHours + \
                 (30 - minutesFromOldHours)                               #if so, properly adding new minutes
             oldFreeHours = self.intToTime(hoursFromOldHours, minutesFromOldHours)    #updating old free hours, considering the time in new schedule
             newFreeHours = self.updateHours(oldFreeHours, minutesToAdd)              #calculating new free hours, using updateHours() function from the dateTime module
         
         if int(oldDailyMinutes) < 240:
-            print('2 if')                                       #checks if old daily minutes worked are less than 240
+            #print('2 if')                                       #checks if old daily minutes worked are less than 240
             if newDailyMinutes >= 240:                                       #if so, checks if new daily minutes worked are greater than 240
-                newFreeHours = self.intToTime(hoursFromOldHours + 1, \
-                                        minutesFromOldHours)[1]+20     #if so, adding one hour(i.e. one hour pause) to the new free hours
+                newFreeHours = self.intToTime(hoursFromOldHours + 1, minutesFromOldHours)    #if so, adding one hour(i.e. one hour pause) to the new free hours
             else:
-                print('3 if')                                                           #checks if new daily minutes worked are less than 240
+                #print('3 if')                                                           #checks if new daily minutes worked are less than 240
                 newFreeHours = self.updateHours(self.intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)      #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
         else:
-            print('4 if')                                                               #checks if old daily minutes worked are already greater than 240
-            newFreeHours = self.updateHours(oldFreeHours, minutesToAdd)          #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
+            #print('4 if')                                                               #checks if old daily minutes worked are already greater than 240
+            newFreeHours = self.updateHours(self.intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)          #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
 
         newWeeklyHours = self.updateHours(self.intToTime(hoursFromOldWeeklyHours, minutesFromOldWeeklyHours), minutesToAdd)      #updating new weekly worked hours using the updateHours() function from the dateTime module
 
@@ -155,7 +154,7 @@ class DoctorTest:
             updatedHours = self.intToTime(intHours, intMinutes)  #new, updated hours
         #in case new minutes are less than 60
         else:
-            print('aboba')
+            #print('aboba')
             intHours = self.timeToInt(hoursToUpdate)[0]                     #assigning hours. they remain the same
             intMinutes = self.timeToInt(hoursToUpdate)[1] + minutesToAdd #updating minutes with minutesToAdd
             updatedHours = self.intToTime(intHours, intMinutes)          #new, updated hours
@@ -179,8 +178,8 @@ class DoctorTest:
     def __str__(self):
         return str(self.getDoctor())
     
-doctor = DoctorTest('Carl', 2, '10h30', 100, '29h30')
-print(doctor)
-
-doctor.updateDoctorsTime(20)
-print(doctor)
+#doctor = DoctorTest('Carl', 2, '10h30', 100, '29h30')
+#print(doctor)
+#
+#doctor.updateDoctorsTime(20)
+#print(doctor)

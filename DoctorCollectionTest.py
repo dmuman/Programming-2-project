@@ -54,14 +54,19 @@ class DoctorCollectionTest:
         pass
     
 doctors = DoctorCollectionTest('doctors10h00.txt')
-print(doctors.getHeader())
-print(doctors.getDoctorsData())
-print(doctors.getDoctors())
+#print(doctors.getHeader())
+#print(doctors.getDoctorsData())
+#print(doctors.getDoctors())
+#
+#doctors.sortDoctors()
+#print(doctors.getDoctors())
 
-doctors.sortDoctors()
-print(doctors.getDoctors())
+for doctor in doctors.getDoctors():
+    print(doctor)
+    doctor.updateDoctorsTime(20)
+    print(doctor)
 
-print(doctors.getDoctors()[1].__lt__(doctors.getDoctors()[0]))
-print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))
+#print(doctors.getDoctors()[1].__lt__(doctors.getDoctors()[0]))
+#print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))
 #for doctor in doctors.getDoctors():
 #   print(type(doctor))

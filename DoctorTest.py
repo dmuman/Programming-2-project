@@ -32,7 +32,10 @@ class DoctorTest:
         return int(self._skill)
 
     def getNextFreeHours(self):
-        return self.timeToInt(self._nextFreeHours)
+        if self._nextFreeHours == 'weekly pause':
+            return 'weekly pause'
+        else:
+            return self.timeToInt(self._nextFreeHours)
     
     def getDailyMinutes(self):
         return int(self._dailyMinutes)
@@ -114,7 +117,7 @@ class DoctorTest:
                                         minutesFromOldHours)[1]+20     #if so, adding one hour(i.e. one hour pause) to the new free hours
             else:
                 print('3 if')                                                           #checks if new daily minutes worked are less than 240
-                newFreeHours = self.updateHours(oldFreeHours, minutesToAdd)      #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
+                newFreeHours = self.updateHours(self.intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)      #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
         else:
             print('4 if')                                                               #checks if old daily minutes worked are already greater than 240
             newFreeHours = self.updateHours(oldFreeHours, minutesToAdd)          #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
@@ -176,8 +179,8 @@ class DoctorTest:
     def __str__(self):
         return str(self.getDoctor())
     
-doctor = DoctorTest('Carl', 2, '10h00', 100, '39h30')
+doctor = DoctorTest('Carl', 2, '10h30', 100, '29h30')
 print(doctor)
 
-doctor.updateDoctorsTime(30)
+doctor.updateDoctorsTime(20)
 print(doctor)

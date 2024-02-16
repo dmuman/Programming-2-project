@@ -1,0 +1,63 @@
+class ScheduleTest:
+    def __init__(self, scheduleTime, motherName, doctorName):
+        self._scheduleTime = scheduleTime
+        self._motherName = motherName
+        self._doctorName = doctorName
+        self._schedule = [self.getScheduleTime(), self.getMotherName(), self.getDoctorName()]
+
+    def setScheduleTime(self, scheduleTime):
+        self._scheduleTime = scheduleTime
+    
+    def setMotherName(self, motherName):
+        self._motherName = motherName
+
+    def setDoctorName(self, doctorName):
+        self._doctorName = doctorName
+
+    def setSchedule(self, schedule):
+        self._schedule = schedule
+
+    def getScheduleTime(self):
+        return self.timeToInt(self._scheduleTime)
+    
+    def getMotherName(self):
+        return self._motherName
+
+    def getDoctorName(self):
+        return self._doctorName
+    
+    def getSchedule(self):
+        return self._schedule
+
+    def sortSchedulesKeys(self):
+
+        totalTime = self.getScheduleTime()[0]*60 + self.getScheduleTime()[1]
+
+        return totalTime, self.getMotherName(), self.getDoctorName()
+
+    def timeToInt(self, time):
+        t = time.split("h")
+        hours = int(t[0])
+        minutes = int(t[1])
+
+        return [hours, minutes]
+
+    #TODO
+
+    def __lt__(self, other):
+        return self.getAge() < other.getAge()
+
+    def __eq__(self, other):
+        return (
+            self.getName() == other.getName() and
+            self.getSkill() == other.getSkill() and
+            self.getNextFreeHours() == other.getNextFreeHours() and
+            self.getDailyMinutes() == other.getDailyMinutes() and
+            self.getWeeklyHours() == other.getWeeklyHours()
+        )
+    
+    def __repr__(self):
+        return str(self.getSchedule())
+    
+    def __str__(self):
+        return str(self.getSchedule())

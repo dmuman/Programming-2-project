@@ -1,0 +1,10 @@
+Organization:
+SmartH
+Hour:
+10h00
+Day: 
+10:12:2023
+Schedule:
+9h50, Maria Machado, Bernardo Biscaia
+10h10, Eduarda Elói, Bernardo Biscaia
+10h45, Fernanda Fonseca, Abílio Amaral

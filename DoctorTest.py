@@ -1,4 +1,7 @@
 class DoctorTest:
+    HOURS_IDX = 0
+    MINUTES_IDX = 1
+    WKL_PAUSE = 'weekly leave'
     def __init__(self, name, skill, nextFreeHours, dailyMinutes, weeklyHours):
         self._name = name
         self._skill = skill
@@ -6,6 +9,13 @@ class DoctorTest:
         self._dailyMinutes = dailyMinutes
         self._weeklyHours = weeklyHours
         self._doctor = [self.getName(), self.getSkill(), self.getNextFreeHours(), self.getDailyMinutes(), self.getWeeklyHours()]
+        self._isDoctorAssigned = False
+
+    def setStatus(self, status):
+        self._isDoctorAssigned = status
+
+    def getStatus(self):
+        return self._isDoctorAssigned
 
     def setName(self, name):
         self._name = name
@@ -32,8 +42,8 @@ class DoctorTest:
         return int(self._skill)
 
     def getNextFreeHours(self):
-        if self._nextFreeHours == 'weekly pause':
-            return 'weekly pause'
+        if self._nextFreeHours == self.WKL_PAUSE:
+            return self.WKL_PAUSE
         else:
             return self.timeToInt(self._nextFreeHours)
     
@@ -48,8 +58,8 @@ class DoctorTest:
     
     def timeToInt(self, time):
         t = time.split("h")
-        hours = int(t[0])
-        minutes = int(t[1])
+        hours = int(t[self.HOURS_IDX])
+        minutes = int(t[self.MINUTES_IDX])
 
         return [hours, minutes]
     
@@ -73,7 +83,7 @@ class DoctorTest:
         else:
             timeToPause = 240 - self.getDailyMinutes()
 
-        totalMinutesWeeklyWorked = (self.getWeeklyHours()[0]*60 + self.getWeeklyHours()[1])
+        totalMinutesWeeklyWorked = (self.getWeeklyHours()[self.HOURS_IDX]*60 + self.getWeeklyHours()[self.MINUTES_IDX])
 
         timeToWeeklyPause = 40 * 60 - totalMinutesWeeklyWorked
 
@@ -112,7 +122,7 @@ class DoctorTest:
         newWeeklyHours = self.updateHours(self.intToTime(hoursFromOldWeeklyHours, minutesFromOldWeeklyHours), minutesToAdd)      #updating new weekly worked hours using the updateHours() function from the dateTime module
 
         if self.timeToInt(newWeeklyHours)[0] >= 40:           #checks if new weekly worked hours are greater than 40
-            newFreeHours = 'weekly pause'                    #if so, doctor receives weekly pause   
+            newFreeHours = self.WKL_PAUSE                    #if so, doctor receives weekly pause   
 
         self.setDailyMinutes(newDailyMinutes)
         self.setNextFreeHours(newFreeHours)
@@ -127,21 +137,20 @@ class DoctorTest:
         #declaring variable for the new, updated hours
         updatedHours = None
         #in case new minutes are greater than 60
-        if self.timeToInt(hoursToUpdate)[1] + minutesToAdd > 60:
-            intHours = self.timeToInt(hoursToUpdate)[0]                                 #assigning hours
-            intMinutes = self.timeToInt(hoursToUpdate)[1]                            #assigning minutes
+        if self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd > 60:
+            intHours = self.timeToInt(hoursToUpdate)[self.HOURS_IDX]                                 #assigning hours
+            intMinutes = self.timeToInt(hoursToUpdate)[self.MINUTES_IDX]                            #assigning minutes
             totalMinutes = intHours * 60 + intMinutes + minutesToAdd            #new totalMinutes
             updatedHours = self.intToTime((totalMinutes // 60), (totalMinutes % 60)) #new, updated hours, based on totalMinutes
         #in case new minutes are equal 60
-        elif self.timeToInt(hoursToUpdate)[1] + minutesToAdd == 60:
-            intHours = self.timeToInt(hoursToUpdate)[0] + 1         #updating hours(adding 1 hour)
+        elif self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd == 60:
+            intHours = self.timeToInt(hoursToUpdate)[self.HOURS_IDX] + 1         #updating hours(adding 1 hour)
             intMinutes = 0                                  #updating minutes(equal 00)
             updatedHours = self.intToTime(intHours, intMinutes)  #new, updated hours
         #in case new minutes are less than 60
         else:
-            #print('aboba')
-            intHours = self.timeToInt(hoursToUpdate)[0]                     #assigning hours. they remain the same
-            intMinutes = self.timeToInt(hoursToUpdate)[1] + minutesToAdd #updating minutes with minutesToAdd
+            intHours = self.timeToInt(hoursToUpdate)[self.HOURS_IDX]                     #assigning hours. they remain the same
+            intMinutes = self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd #updating minutes with minutesToAdd
             updatedHours = self.intToTime(intHours, intMinutes)          #new, updated hours
         return updatedHours
 
@@ -156,7 +165,7 @@ class DoctorTest:
     ######################
 
     def __lt__(self, other):
-        return (self.getWeeklyHours()[0]*60 + self.getWeeklyHours()[0]) < (other.getWeeklyHours()[0]*60 + other.getWeeklyHours()[0])
+        return (self.getWeeklyHours()[self.HOURS_IDX]*60 + self.getWeeklyHours()[self.HOURS_IDX]) < (other.getWeeklyHours()[self.HOURS_IDX]*60 + other.getWeeklyHours()[self.HOURS_IDX])
 
     def __eq__(self, other):
         return (

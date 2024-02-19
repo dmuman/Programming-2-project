@@ -94,8 +94,8 @@ doctors.sortDoctors()
 print(doctors.getDoctors())
 doctors.updateDoctors()
 print(doctors.getDoctors())
-for doctor in doctors.getDoctors():
-    print(doctor.getStatus())
+#for doctor in doctors.getDoctors():
+#    print(doctor.getStatus())
 
 #print(doctors.getDoctors()[1].__lt__(doctors.getDoctors()[0]))
 #print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))

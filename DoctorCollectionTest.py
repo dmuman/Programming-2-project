@@ -69,18 +69,13 @@ class DoctorCollectionTest:
 
     def updateDoctors(self):
         doctorList = self.getDoctors()                         
-        headerTime = self.getHeaderTime()          #declaring variable for the time in header
-        #newDoctors = []                                                 #declaring list for new doctors
+        headerTime = self.getHeaderTime()                                   #declaring variable for the time in header
 
-        for doctor in doctorList:                                       #searching through doctors list
-            if (doctor.getNextFreeHours()[0] * 60 + doctor.getNextFreeHours()[1]) < ((headerTime[0]+1) * 60):  #checks if doctor's old free hours are less than time in the header of old doctors file
-        
-                doctor.updateDoctorsTime(20)      #if so, updating his info with updateDoctorsTime() function
-                #newDoctors.append(doctor)                   #appending new doctors file
-            #else:                                           #checks if doctor's old free hours are greater than time in the header of old doctors file
-                #newDoctors.append(doctor)                   #keeping his old free hours and appending new doctors file
-
-        #return newDoctors 
+        for doctor in doctorList:                                           #searching through doctors list
+            if (doctor.getNextFreeHours()[0] * 60 + \
+                doctor.getNextFreeHours()[1]) < ((headerTime[0]+1) * 60):   #checks if doctor's old free hours are less than time in the header of old doctors file
+                
+                doctor.updateDoctorsTime(20)                                #if so, updating his info with updateDoctorsTime() function
     
 doctors = DoctorCollectionTest('doctors10h00.txt')
 doctors.sortDoctors()

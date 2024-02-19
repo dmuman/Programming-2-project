@@ -177,9 +177,3 @@ class DoctorTest:
     
     def __str__(self):
         return str(self.getDoctor())
-    
-#doctor = DoctorTest('Carl', 2, '10h30', 100, '29h30')
-#print(doctor)
-#
-#doctor.updateDoctorsTime(20)
-#print(doctor)

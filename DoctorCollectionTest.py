@@ -67,34 +67,20 @@ class DoctorCollectionTest:
     def writeDoctorsFile(self):
         pass
 
-    def updateDoctors(doctors):
-        """
-        Update the doctors information taking into account a previous doctors information.
-        
-        Requires:
-        doctors is a list of lists with the structure as in the output of
-        infoFromFiles.readDoctorsFile concerning the time of previous schedule;
-        
-        Ensures:
-        a list of doctors, representing the doctors updated at
-        the current update time (= previous update time + 30 minutes),
-        according to the conditions indicated in the general specification
-        of the project (omitted here for the sake of readability).
-        """
-        doctorList = readDoctorsFile(doctors)                           #declaring variable and storing info from doctors file using readDoctorsFile() function from the infoFromFiles module
-        timeInHeader = saveHeader(doctors)[HEADER_TIME_IDX][0]          #declaring variable for the time in header
-        newDoctors = []                                                 #declaring list for new doctors
+    def updateDoctors(self):
+        doctorList = self.getDoctors()                         
+        headerTime = self.getHeaderTime()          #declaring variable for the time in header
+        #newDoctors = []                                                 #declaring list for new doctors
 
         for doctor in doctorList:                                       #searching through doctors list
-            if hourToInt(doctor[DOCT_BIRTH_END_IDX])*60 + \
-                minutesToInt(doctor[DOCT_BIRTH_END_IDX]) < (hourToInt(timeInHeader)+1)*60:  #checks if doctor's old free hours are less than time in the header of old doctors file
-                
-                doctor = updateDoctorsTime(doctor, 20)      #if so, updating his info with updateDoctorsTime() function
-                newDoctors.append(doctor)                   #appending new doctors file
-            else:                                           #checks if doctor's old free hours are greater than time in the header of old doctors file
-                newDoctors.append(doctor)                   #keeping his old free hours and appending new doctors file
+            if (doctor.getNextFreeHours()[0] * 60 + doctor.getNextFreeHours()[1]) < ((headerTime[0]+1) * 60):  #checks if doctor's old free hours are less than time in the header of old doctors file
+        
+                doctor.updateDoctorsTime(20)      #if so, updating his info with updateDoctorsTime() function
+                #newDoctors.append(doctor)                   #appending new doctors file
+            #else:                                           #checks if doctor's old free hours are greater than time in the header of old doctors file
+                #newDoctors.append(doctor)                   #keeping his old free hours and appending new doctors file
 
-        return newDoctors 
+        #return newDoctors 
     
 doctors = DoctorCollectionTest('doctors10h00.txt')
 print(doctors.getHeaderTime())
@@ -111,18 +97,20 @@ doctors.sortDoctors()
 #    print(doctor)
 #
 print(doctors.getDoctors())
-newDoctors = []                                                 #declaring list for new doctors
-
-for doctor in doctors.getDoctors():                                  #searching through doctors list
-    if (doctor.getNextFreeHours()[0] * 60 + doctor.getNextFreeHours()[1]) < ((doctors.getHeaderTime()[0]+1) * 60):  #checks if doctor's old free hours are less than time in the header of old doctors file
-        
-        doctor.updateDoctorsTime(20)      #if so, updating his info with updateDoctorsTime() function
-        newDoctors.append(doctor)                   #appending new doctors file
-    else:                                           #checks if doctor's old free hours are greater than time in the header of old doctors file
-        newDoctors.append(doctor)
-
-
-print(newDoctors)
+doctors.updateDoctors()
+print(doctors.getDoctors())
+#newDoctors = []                                                 #declaring list for new doctors
+#
+#for doctor in doctors.getDoctors():                                  #searching through doctors list
+#    if (doctor.getNextFreeHours()[0] * 60 + doctor.getNextFreeHours()[1]) < ((doctors.getHeaderTime()[0]+1) * 60):  #checks if doctor's old free hours are less than time in the header of old doctors file
+#        
+#        doctor.updateDoctorsTime(20)      #if so, updating his info with updateDoctorsTime() function
+#        newDoctors.append(doctor)                   #appending new doctors file
+#    else:                                           #checks if doctor's old free hours are greater than time in the header of old doctors file
+#        newDoctors.append(doctor)
+#
+#
+#print(newDoctors)
 
 #print(doctors.getDoctors()[1].__lt__(doctors.getDoctors()[0]))
 #print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))

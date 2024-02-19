@@ -79,14 +79,6 @@ class DoctorTest:
 
         return (-self.getSkill(), -timeToPause, -timeToWeeklyPause, self.getName())
 
-    #TODO
-
-    def isDoctorFree(self):
-        pass
-
-    def updateDoctors(self):
-        pass
-
     def updateDoctorsTime(self, minutesToAdd):
         oldFreeHours = self.getNextFreeHours()
         oldDailyMinutes = self.getDailyMinutes()
@@ -103,22 +95,18 @@ class DoctorTest:
 
         hoursFromOldWeeklyHours, minutesFromOldWeeklyHours = oldWeeklyHours 
 
-        if minutesFromOldHours < 30:
-            #print('first if')                                            #checks if minutes from old hours are less then 30(time from the new schedule)
+        if minutesFromOldHours < 30:                                            #checks if minutes from old hours are less then 30(time from the new schedule)
             minutesFromOldHours = minutesFromOldHours + \
                 (30 - minutesFromOldHours)                               #if so, properly adding new minutes
             oldFreeHours = self.intToTime(hoursFromOldHours, minutesFromOldHours)    #updating old free hours, considering the time in new schedule
             newFreeHours = self.updateHours(oldFreeHours, minutesToAdd)              #calculating new free hours, using updateHours() function from the dateTime module
         
-        if int(oldDailyMinutes) < 240:
-            #print('2 if')                                       #checks if old daily minutes worked are less than 240
+        if int(oldDailyMinutes) < 240:                                       #checks if old daily minutes worked are less than 240
             if newDailyMinutes >= 240:                                       #if so, checks if new daily minutes worked are greater than 240
                 newFreeHours = self.intToTime(hoursFromOldHours + 1, minutesFromOldHours)    #if so, adding one hour(i.e. one hour pause) to the new free hours
-            else:
-                #print('3 if')                                                           #checks if new daily minutes worked are less than 240
+            else:                                                          #checks if new daily minutes worked are less than 240
                 newFreeHours = self.updateHours(self.intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)      #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
-        else:
-            #print('4 if')                                                               #checks if old daily minutes worked are already greater than 240
+        else:                                                               #checks if old daily minutes worked are already greater than 240
             newFreeHours = self.updateHours(self.intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)          #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
 
         newWeeklyHours = self.updateHours(self.intToTime(hoursFromOldWeeklyHours, minutesFromOldWeeklyHours), minutesToAdd)      #updating new weekly worked hours using the updateHours() function from the dateTime module
@@ -130,9 +118,6 @@ class DoctorTest:
         self.setNextFreeHours(newFreeHours)
         self.setWeeklyHours(newWeeklyHours)
         self.setDoctor([self.getName(), self.getSkill(), self.getNextFreeHours(), self.getDailyMinutes(), self.getWeeklyHours()])
-
-        return [self.getName(), str(self.getSkill()), \
-                self.getNextFreeHours(), self.getDailyMinutes(), self.getWeeklyHours()]
 
     def updateHours(self, hoursToUpdate, minutesToAdd):
         #declaring variables for holding the int representatin of hours, minutes and total minutes
@@ -159,6 +144,16 @@ class DoctorTest:
             intMinutes = self.timeToInt(hoursToUpdate)[1] + minutesToAdd #updating minutes with minutesToAdd
             updatedHours = self.intToTime(intHours, intMinutes)          #new, updated hours
         return updatedHours
+
+    #TODO
+
+    def isDoctorFree(self):
+        pass
+
+    def updateDoctors(self):
+        pass
+
+    ######################
 
     def __lt__(self, other):
         return (self.getWeeklyHours()[0]*60 + self.getWeeklyHours()[0]) < (other.getWeeklyHours()[0]*60 + other.getWeeklyHours()[0])

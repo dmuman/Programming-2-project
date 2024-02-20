@@ -11,12 +11,6 @@ class DoctorTest:
         self._doctor = [self.getName(), self.getSkill(), self.getNextFreeHours(), self.getDailyMinutes(), self.getWeeklyHours()]
         self._isDoctorAssigned = False
 
-    def setStatus(self, status):
-        self._isDoctorAssigned = status
-
-    def getStatus(self):
-        return self._isDoctorAssigned
-
     def setName(self, name):
         self._name = name
     
@@ -34,6 +28,9 @@ class DoctorTest:
 
     def setDoctor(self, doctor):
         self._doctor = doctor
+
+    def setStatus(self, status):
+        self._isDoctorAssigned = status
 
     def getName(self):
         return self._name
@@ -56,12 +53,27 @@ class DoctorTest:
     def getDoctor(self):
         return self._doctor
     
+    def getStatus(self):
+        return self._isDoctorAssigned
+    
     def timeToInt(self, time):
         t = time.split("h")
         hours = int(t[self.HOURS_IDX])
         minutes = int(t[self.MINUTES_IDX])
 
         return [hours, minutes]
+    
+    def hoursToInt(self, time):
+        t = time.split("h")
+        hours = int(t[self.HOURS_IDX])
+
+        return hours
+    
+    def minutesToInt(self, time):
+        t = time.split("h")
+        minutes = int(t[self.MINUTES_IDX])
+
+        return minutes
     
     def intToTime(self, hour, minutes):
         h = str(hour)
@@ -121,7 +133,7 @@ class DoctorTest:
 
         newWeeklyHours = self.updateHours(self.intToTime(hoursFromOldWeeklyHours, minutesFromOldWeeklyHours), minutesToAdd)      #updating new weekly worked hours using the updateHours() function from the dateTime module
 
-        if self.timeToInt(newWeeklyHours)[0] >= 40:           #checks if new weekly worked hours are greater than 40
+        if self.hoursToInt(newWeeklyHours) >= 40:           #checks if new weekly worked hours are greater than 40
             newFreeHours = self.WKL_PAUSE                    #if so, doctor receives weekly pause   
 
         self.setDailyMinutes(newDailyMinutes)
@@ -137,20 +149,20 @@ class DoctorTest:
         #declaring variable for the new, updated hours
         updatedHours = None
         #in case new minutes are greater than 60
-        if self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd > 60:
-            intHours = self.timeToInt(hoursToUpdate)[self.HOURS_IDX]                                 #assigning hours
-            intMinutes = self.timeToInt(hoursToUpdate)[self.MINUTES_IDX]                            #assigning minutes
+        if self.minutesToInt(hoursToUpdate) + minutesToAdd > 60:
+            intHours = self.hoursToInt(hoursToUpdate)                                #assigning hours
+            intMinutes = self.minutesToInt(hoursToUpdate)                            #assigning minutes
             totalMinutes = intHours * 60 + intMinutes + minutesToAdd            #new totalMinutes
             updatedHours = self.intToTime((totalMinutes // 60), (totalMinutes % 60)) #new, updated hours, based on totalMinutes
         #in case new minutes are equal 60
-        elif self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd == 60:
-            intHours = self.timeToInt(hoursToUpdate)[self.HOURS_IDX] + 1         #updating hours(adding 1 hour)
+        elif self.minutesToInt(hoursToUpdate) + minutesToAdd == 60:
+            intHours = self.hoursToInt(hoursToUpdate) + 1         #updating hours(adding 1 hour)
             intMinutes = 0                                  #updating minutes(equal 00)
             updatedHours = self.intToTime(intHours, intMinutes)  #new, updated hours
         #in case new minutes are less than 60
         else:
-            intHours = self.timeToInt(hoursToUpdate)[self.HOURS_IDX]                     #assigning hours. they remain the same
-            intMinutes = self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd #updating minutes with minutesToAdd
+            intHours = self.hoursToInt(hoursToUpdate)                     #assigning hours. they remain the same
+            intMinutes = self.minutesToInt(hoursToUpdate) + minutesToAdd #updating minutes with minutesToAdd
             updatedHours = self.intToTime(intHours, intMinutes)          #new, updated hours
         return updatedHours
 

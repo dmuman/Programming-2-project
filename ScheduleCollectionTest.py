@@ -50,9 +50,12 @@ class ScheduleCollectionTest:
 
     #TODO
 
-    def writeDoctorsFile(self):
+    def writeSchedulesFile(self):
         pass
-    
+
+#if doctor is not already assigned => we can assign him to mother in schedule and update the time. Can check it in the schedule
+#if he was assigned before => do not update him(and do not assign to mother). Just add his old assigment to the new schedule
+
 mothers = ScheduleCollectionTest('schedule10h00.txt')
 print(mothers.getHeader())
 print(mothers.getSchedulesData())
@@ -60,8 +63,3 @@ print(mothers.getSchedules())
 
 mothers.sortSchedules()
 print(mothers.getSchedules())
-
-#print(mothers.getMothers()[1].__lt__(mothers.getMothers()[0]))
-#print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))
-#for doctor in doctors.getDoctors():
-#   print(type(doctor))

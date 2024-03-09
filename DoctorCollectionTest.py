@@ -99,3 +99,5 @@ print(doctors.getDoctors())
 
 #print(doctors.getDoctors()[1].__lt__(doctors.getDoctors()[0]))
 #print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))
+
+#якщо час доктора в розкладі більший, ніж час наступного розкладу - він зайнятий. його час не оновлюється, він нікому не приписується

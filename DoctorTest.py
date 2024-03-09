@@ -171,9 +171,6 @@ class DoctorTest:
     def isDoctorFree(self):
         pass
 
-    def updateDoctors(self):
-        pass
-
     ######################
 
     def __lt__(self, other):

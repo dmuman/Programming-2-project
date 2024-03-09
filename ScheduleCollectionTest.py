@@ -63,3 +63,6 @@ print(mothers.getSchedules())
 
 mothers.sortSchedules()
 print(mothers.getSchedules())
+
+for schedule in mothers.getSchedules():
+    print(type(schedule))

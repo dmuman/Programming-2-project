@@ -53,13 +53,13 @@ class MotherCollectionTest:
     def writeDoctorsFile(self):
         pass
     
-mothers = MotherCollectionTest('requests10h30.txt')
-print(mothers.getHeader())
-print(mothers.getMothersData())
-print(mothers.getMothers())
-
-mothers.sortMothers()
-print(mothers.getMothers())
+#mothers = MotherCollectionTest('requests10h30.txt')
+#print(mothers.getHeader())
+#print(mothers.getMothersData())
+#print(mothers.getMothers())
+#
+#mothers.sortMothers()
+#print(mothers.getMothers())
 
 #print(mothers.getMothers()[1].__lt__(mothers.getMothers()[0]))
 #print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))

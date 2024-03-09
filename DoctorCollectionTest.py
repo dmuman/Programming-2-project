@@ -89,11 +89,11 @@ class DoctorCollectionTest:
 #if doctor is not already assigned => we can assign him to mother in schedule and update the time. Can check it in the schedule
 #if he was assigned before => do not update him(and do not assign to mother). Just add his old assigment to the new schedule
     
-doctors = DoctorCollectionTest('doctors10h00.txt')
-doctors.sortDoctors()
-print(doctors.getDoctors())
-doctors.updateDoctors()
-print(doctors.getDoctors())
+#doctors = DoctorCollectionTest('doctors10h00.txt')
+#doctors.sortDoctors()
+#print(doctors.getDoctors())
+#doctors.updateDoctors()
+#print(doctors.getDoctors())
 #for doctor in doctors.getDoctors():
 #    print(doctor.getStatus())
 

@@ -1,6 +1,7 @@
 from ScheduleTest import *
 from DoctorCollectionTest import *
 from MotherCollectionTest import *
+from HelperTest import *
 
 class ScheduleCollectionTest:
     REDIR_STR = 'redirected to other network'
@@ -154,9 +155,9 @@ class ScheduleCollectionTest:
             if doctor.getStatus():
                 assignedDoctors.append(doctor.getName())
 
-        
+       
 
-        return newScheduleList, assignedDoctors
+        return newScheduleList
 
     #TODO
 
@@ -186,7 +187,10 @@ requests = MotherCollectionTest('requests10h30.txt')
 requests.sortMothers()
 requestsList = requests.getMothers()
 
-print(schedules.updateSchedule(doctorsList, requestsList))
+#print(schedules.updateSchedule(doctorsList, requestsList))
+
+for app in schedules.updateSchedule(doctorsList, requestsList):
+    print(type(app))
 
 #TODO
       

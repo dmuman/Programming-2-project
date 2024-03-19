@@ -105,8 +105,7 @@ class DoctorTest:
         oldFreeHours = self.getNextFreeHours()
         oldDailyMinutes = self.getDailyMinutes()
         oldWeeklyHours = self.getWeeklyHours()
-
-        #i love you dimka 
+ 
         #declaring variables for new free hours, daily minutes worked and weekly hours worked
         newFreeHours = None
         newWeeklyHours = None

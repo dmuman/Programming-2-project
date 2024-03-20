@@ -71,11 +71,7 @@ class ScheduleCollectionTest:
                 print(schedule.getSchedule())
 
     def timeToInt(self, time):
-        t = time.split("h")
-        hours = int(t[0])
-        minutes = int(t[1])
-
-        return [hours, minutes]
+        return [self.hoursToInt(time), self.minutesToInt(time)]
     
     def hoursToInt(self, time):
         t = time.split("h")

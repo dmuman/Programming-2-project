@@ -57,11 +57,7 @@ class DoctorTest:
         return self._isDoctorAssigned
     
     def timeToInt(self, time):
-        t = time.split("h")
-        hours = int(t[self.HOURS_IDX])
-        minutes = int(t[self.MINUTES_IDX])
-
-        return [hours, minutes]
+        return [self.hoursToInt(time), self.minutesToInt(time)]
     
     def hoursToInt(self, time):
         t = time.split("h")
@@ -168,7 +164,7 @@ class DoctorTest:
     #TODO
 
     def isDoctorFree(self):
-        pass
+        return True if self.getStatus() else False
 
     ######################
 

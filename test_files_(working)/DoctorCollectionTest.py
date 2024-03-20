@@ -50,12 +50,15 @@ class DoctorCollectionTest:
         return self._doctorsData
     
     def getDoctors(self):
+        #for doctor in self._doctors:
+        #    yield doctor
+
         return self._doctors
 
     def sortDoctors(self):
         self.getDoctors().sort(key = DoctorTest.sortDoctorsKeys)
 
-    def items(self):
+    def items(self):                #can be used insted of getDoctors() => will create a generator object
         for elem in self._doctors:
             yield elem
 
@@ -72,7 +75,8 @@ class DoctorCollectionTest:
         pass
 
     def updateDoctors(self):
-        doctorList = self.getDoctors()                         
+        #doctorList = self.getDoctors()
+        doctorList = list(self.items())                         
         headerTime = self.getHeaderTime()                                   #declaring variable for the time in header
 
         for doctor in doctorList:                                           #searching through doctors list
@@ -101,3 +105,20 @@ class DoctorCollectionTest:
 #print(doctors.getDoctors()[0].__eq__(doctors.getDoctors()[1]))
 
 #якщо час доктора в розкладі більший, ніж час наступного розкладу - він зайнятий. його час не оновлюється, він нікому не приписується
+                
+doctors = DoctorCollectionTest('test_files_(working)\doctors10h00.txt')
+print(doctors.getDoctors())
+
+doctors.updateDoctors()
+
+print(doctors.getDoctors())
+
+#print(doctors.getDoctors())
+#for doctor in doctors.getDoctors():
+    #print(type(doctor))
+    #for info in doctor.getDoctor():
+    #    print(info)
+#    print(doctor)
+
+#    doctor.updateDoctorsTime(20)
+#    print(doctor)

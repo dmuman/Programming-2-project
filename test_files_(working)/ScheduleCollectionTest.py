@@ -2,12 +2,15 @@ from ScheduleTest import *
 from DoctorCollectionTest import *
 from MotherCollectionTest import *
 from HelperTest import *
+from copy import deepcopy
 
 class ScheduleCollectionTest:
     REDIR_STR = 'redirected to other network'
+    TIME_HEAD_IDX = 3
     def __init__(self, filename):
         self._filename = filename
         self._header, self._schedulesData = self.readFile()
+        self._headerTime = self._header[self.TIME_HEAD_IDX]
         self._schedules = []
         for data in self.getSchedulesData():
             scheduleTime, motherName, doctorName = data
@@ -66,7 +69,7 @@ class ScheduleCollectionTest:
             print(type(schedule))
             if schedule.getScheduleTime()[0]*60 + schedule.getScheduleTime()[1] + 20 >= 20*60:                    #ckecks if updated hours from it are greater than 20
                 schedule.setScheduleTime('10h00')   #assigned hours will be equal to the new schedule time in the header
-                schedule.setDoctorName('kaka')
+                schedule.setDoctorName(self.REDIR_STR)
                 schedule.setSchedule([schedule.getScheduleTime(), schedule.getMotherName(), schedule.getDoctorName()])
                 print(schedule.getSchedule())
 
@@ -98,6 +101,9 @@ class ScheduleCollectionTest:
         time = f"{h}h{m}"
 
         return time
+    
+    def getHeaderTime(self):
+        return self.timeToInt(self._headerTime)
 
     def updateHours(self, hoursToUpdate, minutesToAdd):
         #declaring variables for holding the int representatin of hours, minutes and total minutes
@@ -127,33 +133,55 @@ class ScheduleCollectionTest:
     def updateSchedule(self, doctors, requests):
         assignedHours = None
         assignedDoctor = None
-        newScheduleList = []
+        newScheduleList = deepcopy(self.getSchedules())
+        newScheduleList.clear()
         assignedDoctors = []
-        REDIR_HOURS = self.updateHours(self.getHeader()[3], 30)
+        hoursFromHeader, minutesFromHeader = self.getHeaderTime()
+        timeFromHeader = self.intToTime(hoursFromHeader, minutesFromHeader)
+        nextTime = self.updateHours(timeFromHeader, 30)
 
         for appointment in self.getSchedules():                             #reading and searching through the previous schedule
-            if appointment.getScheduleTime()[0] >= 10\
-                and appointment.getScheduleTime()[1] >= 30:           #checks if its hours and minutes are greater than the new schedule
+            if appointment.getScheduleTime()[0] >= self.hoursToInt(self.intToTime(*self.getHeaderTime()))\
+                and appointment.getScheduleTime()[1] >= self.minutesToInt(self.intToTime(*self.getHeaderTime())):           #checks if its hours and minutes are greater than the new schedule
                 newScheduleList.append(appointment)
         
         for schedule in newScheduleList:
             if schedule.getScheduleTime()[0]*60 + schedule.getScheduleTime()[1] + 20 >= 20*60:                    #ckecks if updated hours from it are greater than 20
-                schedule.setScheduleTime(REDIR_HOURS)   #assigned hours will be equal to the new schedule time in the header
+                schedule.setScheduleTime(nextTime)   #assigned hours will be equal to the new schedule time in the header
                 schedule.setDoctorName(self.REDIR_STR)
                 schedule.setSchedule([schedule.getScheduleTime(), schedule.getMotherName(), schedule.getDoctorName()])
 
-        newStringHeaderTime = self.getHeader()[3]
-
+        # if the doctor is in the last schedule and the time of the appointment exceeds the time of the old schedule => 
+        # => the doctor is occupied and is added to the new schedule
         for doctor in doctors:
             for schedule in self.getSchedules():
-                if (doctor.getName() in schedule.getSchedule()) and (schedule.getScheduleTime()[0]*60 + schedule.getScheduleTime()[1] > self.timeToInt(newStringHeaderTime)[0]*60 + self.timeToInt(newStringHeaderTime)[1]+30):
+                if (doctor.getName() in schedule.getSchedule()) and (schedule.getScheduleTime()[0]*60 + schedule.getScheduleTime()[1] > self.getHeaderTime()[0]*60 + self.getHeaderTime()[1]+30):
                     doctor.setStatus(True)
             if doctor.getStatus():
                 assignedDoctors.append(doctor.getName())
 
+        for mother in requests:
+            for doctor in doctors:
+                if ((mother.getRiskLevel() == "high" and doctor.getSkill() >= 2 and not doctor.getStatus())
+                or (mother.getRiskLevel() == "low" and doctor.getSkill() >= 1 and not doctor.getStatus())):
+                    
+                    assignedHours = doctor.getNextFreeHours()  #if so, assigned hours will be equal to the hours when the doctor is free
+                    assignedDoctor = doctor.getName()      #assigned doctor will be equal to the doctor's name
+                    doctor.updateDoctorsTime(20)
+                    
+                    if assignedHours[0]*60 + assignedHours[1] < \
+                        self.hoursToInt(nextTime)*60 + self.minutesToInt(nextTime):    #checks if the assigned hours are less than the updated time of the schedule
+                        assignedHours = nextTime                            #if so, assigned hours will be equal to the updated schedule's time
+
+                    assignedHours = self.intToTime(*assignedHours)
+
+                    appointment = ScheduleTest(assignedHours, mother.getName(), assignedDoctor)    #declaring new appointment, containing assigned hours, mother's and doctor's names
+                    newScheduleList.append(appointment)                                     #appending new schedule list
+                    assignedDoctors.append(doctor)                                          #appending siigned doctors list
+                    doctor.setStatus(True)      
        
 
-        return newScheduleList
+        return newScheduleList #, assignedDoctors
 
     #TODO
 
@@ -163,7 +191,7 @@ class ScheduleCollectionTest:
 #if doctor is not already assigned => we can assign him to mother in schedule and update the time. Can check it in the schedule
 #if he was assigned before => do not update him(and do not assign to mother). Just add his old assigment to the new schedule
 
-schedules = ScheduleCollectionTest('schedule10h00.txt')
+schedules = ScheduleCollectionTest('txt_files/schedule10h00.txt')
 #print(schedules.getHeader())
 #print(schedules.getSchedulesData())
 #print(schedules.getSchedules())
@@ -175,18 +203,22 @@ schedules.sortSchedules()
 #    print(type(schedule))
 
 
-doctors = DoctorCollectionTest('doctors10h00.txt')
+doctors = DoctorCollectionTest('test_files_(working)/doctors10h00.txt')
 doctors.sortDoctors()
 doctorsList = doctors.getDoctors()
 
-requests = MotherCollectionTest('requests10h30.txt')
+requests = MotherCollectionTest('txt_files/requests10h30.txt')
 requests.sortMothers()
 requestsList = requests.getMothers()
 
-#print(schedules.updateSchedule(doctorsList, requestsList))
-
 for app in schedules.updateSchedule(doctorsList, requestsList):
-    print(type(app))
+    print(app)
+
+#for app in schedules.updateSchedule(doctorsList, requestsList):
+#    for i in app:
+#        print(i)
+#        print(type(i))
+    # print(type(app))
 
 #TODO
       

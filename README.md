@@ -9,4 +9,4 @@ Where:
 - **inputFile2** is a file with schedules.
 - **inputFile3** is a file with requests (mothers).
 
-Test files are in the testFiles folder
+Test files are in the testSets folder

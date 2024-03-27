@@ -1,0 +1,8 @@
+Organization:
+SmartH
+Hour:
+16h00
+Day: 
+10:12:2023
+Schedule:
+16h10, Maria Martins, Manuel Machado

@@ -141,8 +141,8 @@ class ScheduleCollection:
         nextTime = self.updateHours(timeFromHeader, 30)
 
         for appointment in self.getSchedules():                             #reading and searching through the previous schedule
-            if appointment.getScheduleTime()[0] >= self.hoursToInt(self.intToTime(*self.getHeaderTime()))\
-                and appointment.getScheduleTime()[1] >= self.minutesToInt(self.intToTime(*self.getHeaderTime())):           #checks if its hours and minutes are greater than the new schedule
+            if appointment.getScheduleTime()[0] >= self.hoursToInt(nextTime)\
+                and appointment.getScheduleTime()[1] >= self.minutesToInt(nextTime):           #checks if its hours and minutes are greater than the new schedule
                 newScheduleList.append(appointment)
         
         for schedule in newScheduleList:
@@ -191,7 +191,7 @@ class ScheduleCollection:
 #if doctor is not already assigned => we can assign him to mother in schedule and update the time. Can check it in the schedule
 #if he was assigned before => do not update him(and do not assign to mother). Just add his old assigment to the new schedule
 
-schedules = ScheduleCollection('txt_files/schedule10h00.txt')
+schedules = ScheduleCollection('txt_files/testSet1/schedule10h00.txt')
 #print(schedules.getHeader())
 #print(schedules.getSchedulesData())
 #print(schedules.getSchedules())
@@ -203,11 +203,11 @@ schedules.sortSchedules()
 #    print(type(schedule))
 
 
-doctors = DoctorCollection('txt_files/doctors10h00.txt')
+doctors = DoctorCollection('txt_files/testSet1/doctors10h00.txt')
 doctors.sortDoctors()
 doctorsList = doctors.getDoctors()
 
-requests = MotherCollection('txt_files/requests10h30.txt')
+requests = MotherCollection('txt_files/testSet1/requests10h30.txt')
 requests.sortMothers()
 requestsList = requests.getMothers()
 

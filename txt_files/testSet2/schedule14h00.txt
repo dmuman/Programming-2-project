@@ -1,0 +1,9 @@
+Organization:
+SmartH
+Hour:
+14h00
+Day: 
+10:12:2023
+Schedule:
+14h00, Maria Machado, José Justo
+14h00, Eduarda Elói, Horácio Horta

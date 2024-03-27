@@ -1,0 +1,11 @@
+﻿Organization:
+SmartH
+Hour:
+14h30
+Day: 
+10:12:2023
+Doctors:
+Guilherme Gaspar, 2, weekly leave, 60, 40h10
+Horácio Horta, 3, 14h50, 140, 7h40
+Ildefonso Inácio, 2, weekly leave, 60, 40h10
+José Justo, 2, 14h50, 60, 15h20

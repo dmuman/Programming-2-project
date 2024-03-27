@@ -1,0 +1,11 @@
+Organization:
+SmartH
+Hour:
+14h30
+Day: 
+10:12:2023
+Schedule:
+14h30, Graça Gonçalves, Horácio Horta
+14h30, Hortênsia Holmes, José Justo
+14h30, Irene Ilídio, Guilherme Gaspar
+14h30, Joana Joanes, Ildefonso Inácio

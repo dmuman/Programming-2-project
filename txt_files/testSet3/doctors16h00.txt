@@ -1,0 +1,9 @@
+﻿Organization:
+SmartH
+Hour:
+16h00
+Day: 
+10:12:2023
+Doctors:
+Manuel Machado, 3, 16h30, 120, 39h40
+Orlando Oliveira, 3, 16h40, 80, 39h20

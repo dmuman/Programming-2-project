@@ -161,15 +161,10 @@ class Doctor:
             updatedHours = self.intToTime(intHours, intMinutes)          #new, updated hours
         return updatedHours
 
-    #TODO
-
-    def isDoctorFree(self):
-        return True if self.getStatus() else False
-
     ######################
 
     def __lt__(self, other):
-        return (self.getWeeklyHours()[self.HOURS_IDX]*60 + self.getWeeklyHours()[self.HOURS_IDX]) < (other.getWeeklyHours()[self.HOURS_IDX]*60 + other.getWeeklyHours()[self.HOURS_IDX])
+        return (self.getWeeklyHours()[self.HOURS_IDX]*60 + self.getWeeklyHours()[self.MINUTES_IDX]) < (other.getWeeklyHours()[self.HOURS_IDX]*60 + other.getWeeklyHours()[self.MINUTES_IDX])
 
     def __eq__(self, other):
         return (

@@ -1,0 +1,11 @@
+Organization:
+SmartH
+Hour:
+10h30
+Day: 
+10:12:2023
+Schedule:
+10h30, Alberta Asunção, Bernardo Biscaia
+10h35, Brunilde Bastos, Carlos Castro
+10h40, Carlota Cunha, Duarte Dantas
+10h45, Fernanda Fonseca, Abílio Amaral

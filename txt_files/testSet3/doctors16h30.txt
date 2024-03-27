@@ -1,0 +1,9 @@
+﻿Organization:
+SmartH
+Hour:
+16h30
+Day: 
+10:12:2023
+Doctors:
+Manuel Machado, 3, weekly leave, 140, 40h00
+Orlando Oliveira, 3, weekly leave, 120, 40h00

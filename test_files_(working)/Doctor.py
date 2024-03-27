@@ -1,4 +1,4 @@
-class DoctorTest:
+class Doctor:
     HOURS_IDX = 0
     MINUTES_IDX = 1
     WKL_PAUSE = 'weekly leave'

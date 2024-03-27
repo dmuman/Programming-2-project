@@ -1,6 +1,6 @@
-from DoctorTest import *
+from Doctor import *
 
-class DoctorCollectionTest:
+class DoctorCollection:
     TIME_HEAD_IDX = 3
     NUM_HEAD_LINES = 7
     HOURS_IDX = 0
@@ -12,7 +12,7 @@ class DoctorCollectionTest:
         self._doctors = []
         for data in self.getDoctorsData():
             name, skill, nextFreeHours, dailyMinutes, weeklyHours = data
-            doctor = DoctorTest(name, skill, nextFreeHours, dailyMinutes, weeklyHours)
+            doctor = Doctor(name, skill, nextFreeHours, dailyMinutes, weeklyHours)
             self._doctors.append(doctor)
 
     def getFilename(self):
@@ -53,7 +53,7 @@ class DoctorCollectionTest:
         return self._doctors
 
     def sortDoctors(self):
-        self.getDoctors().sort(key = DoctorTest.sortDoctorsKeys)
+        self.getDoctors().sort(key = Doctor.sortDoctorsKeys)
 
     def timeToInt(self, time):
         t = time.split("h")
@@ -77,8 +77,8 @@ class DoctorCollectionTest:
             #    doctor.getNextFreeHours()[1]) > ((headerTime[0]+1) * 60):
             #    doctor.setStatus(True)
 
-            if (doctor.getNextFreeHours()[DoctorTest.HOURS_IDX] * 60 + \
-                doctor.getNextFreeHours()[DoctorTest.MINUTES_IDX]) < ((headerTime[DoctorTest.HOURS_IDX]+1) * 60):   #checks if doctor's old free hours are less than time in the header of old doctors file
+            if (doctor.getNextFreeHours()[Doctor.HOURS_IDX] * 60 + \
+                doctor.getNextFreeHours()[Doctor.MINUTES_IDX]) < ((headerTime[Doctor.HOURS_IDX]+1) * 60):   #checks if doctor's old free hours are less than time in the header of old doctors file
                 
                 doctor.updateDoctorsTime(20)                                #if so, updating his info with updateDoctorsTime() function
 

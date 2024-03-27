@@ -1,13 +1,13 @@
-from MotherTest import *
+from Mother import *
 
-class MotherCollectionTest:
+class MotherCollection:
     def __init__(self, filename):
         self._filename = filename
         self._header, self._mothersData = self.readFile()
         self._mothers = []
         for data in self.getMothersData():
             name, age, tagColour, riskLevel = data
-            mother = MotherTest(name, age, tagColour, riskLevel)
+            mother = Mother(name, age, tagColour, riskLevel)
             self._mothers.append(mother)
 
     def getFilename(self):
@@ -42,7 +42,7 @@ class MotherCollectionTest:
         return self._mothers
 
     def sortMothers(self):
-        self.getMothers().sort(key = MotherTest.sortMothersKeys)
+        self.getMothers().sort(key = Mother.sortMothersKeys)
 
     def items(self):
         for elem in self._mothers:

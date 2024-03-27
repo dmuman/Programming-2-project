@@ -1,4 +1,4 @@
-class MotherTest:
+class Mother:
     def __init__(self, name, age, tagColour, riskLevel):
         self._name = name
         self._age = age

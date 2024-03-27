@@ -1,10 +1,10 @@
-from ScheduleTest import *
-from DoctorCollectionTest import *
-from MotherCollectionTest import *
-from HelperTest import *
+from Schedule import *
+from DoctorCollection import *
+from MotherCollection import *
+from Helper import *
 from copy import deepcopy
 
-class ScheduleCollectionTest:
+class ScheduleCollection:
     REDIR_STR = 'redirected to other network'
     TIME_HEAD_IDX = 3
     def __init__(self, filename):
@@ -14,7 +14,7 @@ class ScheduleCollectionTest:
         self._schedules = []
         for data in self.getSchedulesData():
             scheduleTime, motherName, doctorName = data
-            schedule = ScheduleTest(scheduleTime, motherName, doctorName)
+            schedule = Schedule(scheduleTime, motherName, doctorName)
             self._schedules.append(schedule)
 
     def getFilename(self):
@@ -49,7 +49,7 @@ class ScheduleCollectionTest:
         return self._schedules
 
     def sortSchedules(self):
-        self.getSchedules().sort(key = ScheduleTest.sortSchedulesKeys)
+        self.getSchedules().sort(key = Schedule.sortSchedulesKeys)
 
     def items(self):
         for elem in self._schedules:
@@ -175,7 +175,7 @@ class ScheduleCollectionTest:
 
                     assignedHours = self.intToTime(*assignedHours)
 
-                    appointment = ScheduleTest(assignedHours, mother.getName(), assignedDoctor)    #declaring new appointment, containing assigned hours, mother's and doctor's names
+                    appointment = Schedule(assignedHours, mother.getName(), assignedDoctor)    #declaring new appointment, containing assigned hours, mother's and doctor's names
                     newScheduleList.append(appointment)                                     #appending new schedule list
                     assignedDoctors.append(doctor)                                          #appending siigned doctors list
                     doctor.setStatus(True)      
@@ -191,7 +191,7 @@ class ScheduleCollectionTest:
 #if doctor is not already assigned => we can assign him to mother in schedule and update the time. Can check it in the schedule
 #if he was assigned before => do not update him(and do not assign to mother). Just add his old assigment to the new schedule
 
-schedules = ScheduleCollectionTest('txt_files/schedule10h00.txt')
+schedules = ScheduleCollection('txt_files/schedule10h00.txt')
 #print(schedules.getHeader())
 #print(schedules.getSchedulesData())
 #print(schedules.getSchedules())
@@ -203,11 +203,11 @@ schedules.sortSchedules()
 #    print(type(schedule))
 
 
-doctors = DoctorCollectionTest('test_files_(working)/doctors10h00.txt')
+doctors = DoctorCollection('txt_files/doctors10h00.txt')
 doctors.sortDoctors()
 doctorsList = doctors.getDoctors()
 
-requests = MotherCollectionTest('txt_files/requests10h30.txt')
+requests = MotherCollection('txt_files/requests10h30.txt')
 requests.sortMothers()
 requestsList = requests.getMothers()
 

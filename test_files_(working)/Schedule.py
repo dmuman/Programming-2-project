@@ -1,4 +1,4 @@
-class ScheduleTest:
+class Schedule:
     def __init__(self, scheduleTime, motherName, doctorName):
         self._scheduleTime = scheduleTime
         self._motherName = motherName

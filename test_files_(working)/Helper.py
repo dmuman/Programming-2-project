@@ -1,4 +1,4 @@
-class HelperTest:
+class Helper:
     def timeToInt(self, time):
         t = time.split("h")
         hours = int(t[0])

@@ -67,7 +67,7 @@ class ScheduleCollection:
         nextTime = Helper().updateHours(timeFromHeader, 30)  # Get the updated time
 
         for appointment in self.getSchedules():  # Reading and searching through the previous schedule
-            if appointment.getScheduleTime()[0] >= Helper().timeToInt(nextTime)[self.HOURS_IDX] and appointment.getScheduleTime()[1] >= Helper().timeToInt(nextTime)[self.MINUTES_IDX]:  # Checks if its hours and minutes are greater than the new schedule
+            if appointment.getScheduleTime()[self.HOURS_IDX] >= Helper().timeToInt(nextTime)[self.HOURS_IDX] and appointment.getScheduleTime()[self.MINUTES_IDX] >= Helper().timeToInt(nextTime)[self.MINUTES_IDX]:  # Checks if its hours and minutes are greater than the new schedule
                 newScheduleList.append(appointment)
                 for doctor in doctors:
                     for newAppointment in newScheduleList:
@@ -75,7 +75,7 @@ class ScheduleCollection:
                             newDoctorsList.append(doctor)
 
         for schedule in newScheduleList:
-            if schedule.getScheduleTime()[0] * 60 + schedule.getScheduleTime()[1] + 20 >= 20 * 60:  # Checks if updated hours from it are greater than 20
+            if schedule.getScheduleTime()[self.HOURS_IDX] * 60 + schedule.getScheduleTime()[self.MINUTES_IDX] + 20 >= 20 * 60:  # Checks if updated hours from it are greater than 20
                 schedule.setScheduleTime(nextTime)  # Assigned hours will be equal to the new schedule time in the header
                 schedule.setDoctorName(self.REDIR_STR)
                 schedule.setSchedule([schedule.getScheduleTime(), schedule.getMotherName(), schedule.getDoctorName()])
@@ -84,7 +84,7 @@ class ScheduleCollection:
         # => the doctor is occupied and is added to the new schedule
         for doctor in doctors:
             for schedule in self.getSchedules():
-                if (doctor.getName() in schedule.getSchedule()) and (schedule.getScheduleTime()[0] * 60 + schedule.getScheduleTime()[1] > self.getHeaderTime()[0] * 60 + self.getHeaderTime()[1] + 30):
+                if (doctor.getName() in schedule.getSchedule()) and (schedule.getScheduleTime()[self.HOURS_IDX] * 60 + schedule.getScheduleTime()[self.MINUTES_IDX] > self.getHeaderTime()[0] * 60 + self.getHeaderTime()[self.MINUTES_IDX] + 30):
                     doctor.setStatus(True)
 
         for mother in requests:
@@ -107,10 +107,10 @@ class ScheduleCollection:
                 assignedHours = suitableDoctor.getNextFreeHours()
                 assignedDoctor = suitableDoctor.getName()
 
-                if assignedHours[0]*60 + assignedHours[1] < Helper().timeToInt(nextTime)[self.HOURS_IDX]*60 + Helper().timeToInt(nextTime)[self.MINUTES_IDX]:    #checks if the assigned hours are less than the updated time of the schedule
+                if assignedHours[self.HOURS_IDX]*60 + assignedHours[self.MINUTES_IDX] < Helper().timeToInt(nextTime)[self.HOURS_IDX]*60 + Helper().timeToInt(nextTime)[self.MINUTES_IDX]:    #checks if the assigned hours are less than the updated time of the schedule
                     assignedHours = Helper().timeToInt(nextTime)
 
-                appointment = Schedule(Helper().intToTime(assignedHours[0], assignedHours[1]), motherName, assignedDoctor)
+                appointment = Schedule(Helper().intToTime(assignedHours[self.HOURS_IDX], assignedHours[self.MINUTES_IDX]), motherName, assignedDoctor)
                 newScheduleList.append(appointment)
 
                 doctor.updateDoctorsTime(20)

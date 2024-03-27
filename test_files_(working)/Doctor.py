@@ -120,7 +120,7 @@ class Doctor:
         
         if int(oldDailyMinutes) < 240:                                       #checks if old daily minutes worked are less than 240
             if newDailyMinutes >= 240:                                       #if so, checks if new daily minutes worked are greater than 240
-                newFreeHours = self.intToTime(hoursFromOldHours + 1, minutesFromOldHours)    #if so, adding one hour(i.e. one hour pause) to the new free hours
+                newFreeHours = self.intToTime(hoursFromOldHours + 1, minutesFromOldHours + minutesToAdd)    #if so, adding one hour(i.e. one hour pause) to the new free hours
             else:                                                          #checks if new daily minutes worked are less than 240
                 newFreeHours = self.updateHours(self.intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)      #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
         else:                                                               #checks if old daily minutes worked are already greater than 240
@@ -160,20 +160,6 @@ class Doctor:
             intMinutes = self.minutesToInt(hoursToUpdate) + minutesToAdd #updating minutes with minutesToAdd
             updatedHours = self.intToTime(intHours, intMinutes)          #new, updated hours
         return updatedHours
-
-    ######################
-
-    def __lt__(self, other):
-        return (self.getWeeklyHours()[self.HOURS_IDX]*60 + self.getWeeklyHours()[self.MINUTES_IDX]) < (other.getWeeklyHours()[self.HOURS_IDX]*60 + other.getWeeklyHours()[self.MINUTES_IDX])
-
-    def __eq__(self, other):
-        return (
-            self.getName() == other.getName() and
-            self.getSkill() == other.getSkill() and
-            self.getNextFreeHours() == other.getNextFreeHours() and
-            self.getDailyMinutes() == other.getDailyMinutes() and
-            self.getWeeklyHours() == other.getWeeklyHours()
-        )
     
     def __repr__(self):
         return str(self.getDoctor())

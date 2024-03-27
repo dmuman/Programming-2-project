@@ -41,20 +41,6 @@ class Schedule:
         minutes = int(t[1])
 
         return [hours, minutes]
-
-    #TODO
-
-    def __lt__(self, other):
-        return self.getAge() < other.getAge()
-
-    def __eq__(self, other):
-        return (
-            self.getName() == other.getName() and
-            self.getSkill() == other.getSkill() and
-            self.getNextFreeHours() == other.getNextFreeHours() and
-            self.getDailyMinutes() == other.getDailyMinutes() and
-            self.getWeeklyHours() == other.getWeeklyHours()
-        )
     
     def __repr__(self):
         return str(self.getSchedule())

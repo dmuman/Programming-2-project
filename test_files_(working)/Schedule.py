@@ -1,4 +1,8 @@
+from Helper import *
+
 class Schedule:
+    HOURS_IDX = 0
+    MINUTES_IDX = 1
     def __init__(self, scheduleTime, motherName, doctorName):
         self._scheduleTime = scheduleTime
         self._motherName = motherName
@@ -18,7 +22,7 @@ class Schedule:
         self._schedule = schedule
 
     def getScheduleTime(self):
-        return self.timeToInt(self._scheduleTime)
+        return Helper().timeToInt(self._scheduleTime)
     
     def getMotherName(self):
         return self._motherName
@@ -34,13 +38,6 @@ class Schedule:
         totalTime = self.getScheduleTime()[0]*60 + self.getScheduleTime()[1]
 
         return totalTime, self.getMotherName(), self.getDoctorName()
-
-    def timeToInt(self, time):
-        t = time.split("h")
-        hours = int(t[0])
-        minutes = int(t[1])
-
-        return [hours, minutes]
     
     def __repr__(self):
         return str(self.getSchedule())

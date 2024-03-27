@@ -1,4 +1,5 @@
 from Doctor import *
+from Helper import *
 
 class DoctorCollection:
     TIME_HEAD_IDX = 3
@@ -44,7 +45,7 @@ class DoctorCollection:
         return self._header
     
     def getHeaderTime(self):
-        return self.timeToInt(self._headerTime)
+        return Helper().timeToInt(self._headerTime)
 
     def getDoctorsData(self):
         return self._doctorsData
@@ -54,10 +55,3 @@ class DoctorCollection:
 
     def sortDoctors(self):
         self.getDoctors().sort(key = Doctor.sortDoctorsKeys)
-
-    def timeToInt(self, time):
-        t = time.split("h")
-        hours = int(t[self.HOURS_IDX])
-        minutes = int(t[self.MINUTES_IDX])
-
-        return [hours, minutes]

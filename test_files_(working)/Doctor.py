@@ -1,3 +1,5 @@
+from Helper import *
+
 class Doctor:
     HOURS_IDX = 0
     MINUTES_IDX = 1
@@ -42,40 +44,19 @@ class Doctor:
         if self._nextFreeHours == self.WKL_PAUSE:
             return self.WKL_PAUSE
         else:
-            return self.timeToInt(self._nextFreeHours)
+            return Helper().timeToInt(self._nextFreeHours)
     
     def getDailyMinutes(self):
         return int(self._dailyMinutes)
     
     def getWeeklyHours(self):
-        return self.timeToInt(self._weeklyHours)
+        return Helper().timeToInt(self._weeklyHours)
     
     def getDoctor(self):
         return self._doctor
     
     def getStatus(self):
         return self._isDoctorAssigned
-    
-    def timeToInt(self, time):
-        t = time.split("h")
-        hours = int(t[self.HOURS_IDX])
-        minutes = int(t[self.MINUTES_IDX])
-
-        return [hours, minutes]
-    
-    def intToTime(self, hour, minutes):
-        h = str(hour)
-        m = str(minutes)
-
-        if hour < 10:
-            h = "0" + h
-
-        if minutes < 10 or minutes == 0:
-            m = "0" + m
-
-        time = f"{h}h{m}"
-
-        return time
 
     def sortDoctorsKeys(self):
         if self.getDailyMinutes() > 240:
@@ -107,51 +88,26 @@ class Doctor:
         if minutesFromOldHours < 30:                                            #checks if minutes from old hours are less then 30(time from the new schedule)
             minutesFromOldHours = minutesFromOldHours + \
                 (30 - minutesFromOldHours)                               #if so, properly adding new minutes
-            oldFreeHours = self.intToTime(hoursFromOldHours, minutesFromOldHours)    #updating old free hours, considering the time in new schedule
-            newFreeHours = self.updateHours(oldFreeHours, minutesToAdd)              #calculating new free hours, using updateHours() function from the dateTime module
+            oldFreeHours = Helper().intToTime(hoursFromOldHours, minutesFromOldHours)    #updating old free hours, considering the time in new schedule
+            newFreeHours = Helper().updateHours(oldFreeHours, minutesToAdd)              #calculating new free hours, using updateHours() function from the dateTime module
         
         if int(oldDailyMinutes) < 240:                                       #checks if old daily minutes worked are less than 240
             if newDailyMinutes >= 240:                                       #if so, checks if new daily minutes worked are greater than 240
-                newFreeHours = self.intToTime(hoursFromOldHours + 1, minutesFromOldHours + minutesToAdd)    #if so, adding one hour(i.e. one hour pause) to the new free hours
+                newFreeHours = Helper().intToTime(hoursFromOldHours + 1, minutesFromOldHours + minutesToAdd)    #if so, adding one hour(i.e. one hour pause) to the new free hours
             else:                                                          #checks if new daily minutes worked are less than 240
-                newFreeHours = self.updateHours(self.intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)      #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
+                newFreeHours = Helper().updateHours(Helper().intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)      #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
         else:                                                               #checks if old daily minutes worked are already greater than 240
-            newFreeHours = self.updateHours(self.intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)          #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
+            newFreeHours = Helper().updateHours(Helper().intToTime(hoursFromOldHours, minutesFromOldHours), minutesToAdd)          #if so, adding minutes to the new free hours, using updateHours() function from th dateTime module
 
-        newWeeklyHours = self.updateHours(self.intToTime(hoursFromOldWeeklyHours, minutesFromOldWeeklyHours), minutesToAdd)      #updating new weekly worked hours using the updateHours() function from the dateTime module
+        newWeeklyHours = Helper().updateHours(Helper().intToTime(hoursFromOldWeeklyHours, minutesFromOldWeeklyHours), minutesToAdd)      #updating new weekly worked hours using the updateHours() function from the dateTime module
 
-        if self.timeToInt(newWeeklyHours)[self.HOURS_IDX] >= 40:           #checks if new weekly worked hours are greater than 40
+        if Helper().timeToInt(newWeeklyHours)[self.HOURS_IDX] >= 40:           #checks if new weekly worked hours are greater than 40
             newFreeHours = self.WKL_PAUSE                    #if so, doctor receives weekly pause   
 
         self.setDailyMinutes(newDailyMinutes)
         self.setNextFreeHours(newFreeHours)
         self.setWeeklyHours(newWeeklyHours)
         self.setDoctor([self.getName(), self.getSkill(), self.getNextFreeHours(), self.getDailyMinutes(), self.getWeeklyHours()])
-
-    def updateHours(self, hoursToUpdate, minutesToAdd):
-        #declaring variables for holding the int representatin of hours, minutes and total minutes
-        intHours = None 
-        intMinutes = None
-        totalMinutes = None
-        #declaring variable for the new, updated hours
-        updatedHours = None
-        #in case new minutes are greater than 60
-        if self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd > 60:
-            intHours = self.timeToInt(hoursToUpdate)[self.HOURS_IDX]                                #assigning hours
-            intMinutes = self.timeToInt(hoursToUpdate)[self.MINUTES_IDX]                            #assigning minutes
-            totalMinutes = intHours * 60 + intMinutes + minutesToAdd            #new totalMinutes
-            updatedHours = self.intToTime((totalMinutes // 60), (totalMinutes % 60)) #new, updated hours, based on totalMinutes
-        #in case new minutes are equal 60
-        elif self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd == 60:
-            intHours = self.timeToInt(hoursToUpdate)[self.HOURS_IDX] + 1         #updating hours(adding 1 hour)
-            intMinutes = 0                                  #updating minutes(equal 00)
-            updatedHours = self.intToTime(intHours, intMinutes)  #new, updated hours
-        #in case new minutes are less than 60
-        else:
-            intHours = self.timeToInt(hoursToUpdate)[self.HOURS_IDX]                     #assigning hours. they remain the same
-            intMinutes = self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd #updating minutes with minutesToAdd
-            updatedHours = self.intToTime(intHours, intMinutes)          #new, updated hours
-        return updatedHours
     
     def __repr__(self):
         return str(self.getDoctor())

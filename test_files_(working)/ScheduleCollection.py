@@ -127,18 +127,19 @@ class ScheduleCollection:
         return newScheduleList, newDoctorsList
 
 
-schedules = ScheduleCollection('txt_files/testSet2/schedule14h00.txt')
+schedules = ScheduleCollection('txt_files/testSet1/schedule10h00.txt')
 schedules.sortSchedules()
 
-doctors = DoctorCollection('txt_files/testSet2/doctors14h00.txt')
+doctors = DoctorCollection('txt_files/testSet1/doctors10h00.txt')
 doctors.sortDoctors()
 doctorsList = doctors.getDoctors()
 print(doctorsList)
 
-requests = MotherCollection('txt_files/testSet2/requests14h30.txt')
+requests = MotherCollection('txt_files/testSet1/requests10h30.txt')
 requests.sortMothers()
 requestsList = requests.getMothers()
 print(requestsList)
 
 for app in schedules.updateSchedule(doctorsList, requestsList):
-    print(app)
+    for elem in app:
+        print(elem)

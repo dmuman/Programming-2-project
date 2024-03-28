@@ -1,4 +1,4 @@
-from Helper import *
+from Helper import Helper
 
 class Doctor:
     HOURS_IDX = 0
@@ -86,8 +86,7 @@ class Doctor:
         hoursFromOldWeeklyHours, minutesFromOldWeeklyHours = oldWeeklyHours 
 
         if minutesFromOldHours < 30:                                            #checks if minutes from old hours are less then 30(time from the new schedule)
-            minutesFromOldHours = minutesFromOldHours + \
-                (30 - minutesFromOldHours)                               #if so, properly adding new minutes
+            minutesFromOldHours = minutesFromOldHours + (30 - minutesFromOldHours)                               #if so, properly adding new minutes
             oldFreeHours = Helper().intToTime(hoursFromOldHours, minutesFromOldHours)    #updating old free hours, considering the time in new schedule
             newFreeHours = Helper().updateHours(oldFreeHours, minutesToAdd)              #calculating new free hours, using updateHours() function from the dateTime module
         

@@ -1,9 +1,10 @@
-from Mother import *
+from Mother import Mother
+from Helper import Helper
 
 class MotherCollection:
     def __init__(self, filename):
         self._filename = filename
-        self._header, self._mothersData = self.readFile()
+        self._header, self._mothersData = Helper().readFile(self.getFilename())
         self._mothers = []
         for data in self.getMothersData():
             name, age, tagColour, riskLevel = data
@@ -12,16 +13,6 @@ class MotherCollection:
 
     def getFilename(self):
         return self._filename
-
-    def readFile(self):
-        with open(self.getFilename(), 'r', encoding='utf-8') as inFile:
-            lines = inFile.readlines()
-
-            header = [line.rstrip() for line in lines[:7] if line.strip()]
-
-            mothersData = [line.strip().split(", ") for line in lines[7:] if line.strip()]
-
-        return header, mothersData
     
     def setHeader(self, header):
         self._header = header

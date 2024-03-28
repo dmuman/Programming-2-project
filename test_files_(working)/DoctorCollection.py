@@ -2,13 +2,13 @@ from Doctor import *
 from Helper import *
 
 class DoctorCollection:
-    TIME_HEAD_IDX = 3
-    NUM_HEAD_LINES = 7
     HOURS_IDX = 0
     MINUTES_IDX = 1
+    TIME_HEAD_IDX = 3
+    NUM_HEAD_LINES = 7
     def __init__(self, filename):
         self._filename = filename
-        self._header, self._doctorsData = self.readFile()
+        self._header, self._doctorsData = Helper().readFile(self.getFilename())
         self._headerTime = self._header[self.TIME_HEAD_IDX]
         self._doctors = []
         for data in self.getDoctorsData():
@@ -18,22 +18,16 @@ class DoctorCollection:
 
     def getFilename(self):
         return self._filename
-
-    def readFile(self):
-        with open(self.getFilename(), 'r', encoding='utf-8') as inFile:
-            lines = inFile.readlines()
-
-            header = [line.rstrip() for line in lines[:self.NUM_HEAD_LINES] if line.strip()]
-
-            doctorsData = [line.strip().split(", ") for line in lines[self.NUM_HEAD_LINES:] if line.strip()]
-
-        return header, doctorsData
+    
+    def updateHeadersTime(self, minutesToAdd):
+        self.setHeaderTime(Helper().updateHours(self._headerTime, minutesToAdd))
+        self.getHeader
     
     def setHeader(self, header):
         self._header = header
 
     def setHeaderTime(self, headerTime):
-        self._headerTime = headerTime
+        self.getHeader()[self.TIME_HEAD_IDX] = headerTime
 
     def setDoctorsData(self, doctorsData):
         self._doctorsData = doctorsData

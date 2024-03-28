@@ -1,6 +1,35 @@
 class Helper:
     HOURS_IDX = 0
     MINUTES_IDX = 1
+    HEADER_TIME_IDX = 3
+    FILENAME_HEADER_IDX = 6
+
+    def __init__(self):
+        pass
+
+    def readFile(self, filename):
+        try:
+            with open(filename, 'r', encoding='utf-8-sig') as inFile:
+                timeInName = filename[-9:-4]
+
+                lines = inFile.readlines()
+
+                header = [line.rstrip() for line in lines[:7] if line.strip()]
+
+                timeInHeader = header[self.HEADER_TIME_IDX]
+
+                data = [line.strip().split(", ") for line in lines[7:] if line.strip()]
+
+                if header[self.FILENAME_HEADER_IDX] not in ['Schedule:', 'Doctors:', 'Mothers:']:
+                    raise IOError(f"scope inconsistency between name and header in file <{filename}>")
+                elif timeInHeader != timeInName:
+                    raise IOError("time in the header and in the name are not the same")
+                else:
+                    return header, data
+                
+        except IOError as e:
+            print(f"File head error: {e}")
+    
     def timeToInt(self, time):
         t = time.split("h")
         hours = int(t[self.HOURS_IDX])
@@ -46,3 +75,7 @@ class Helper:
             intMinutes = self.timeToInt(hoursToUpdate)[self.MINUTES_IDX] + minutesToAdd #updating minutes with minutesToAdd
             updatedHours = self.intToTime(intHours, intMinutes)          #new, updated hours
         return updatedHours
+    
+#TODO
+    def writeFile():
+        pass

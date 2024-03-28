@@ -1,17 +1,16 @@
 from Schedule import *
-from DoctorCollection import *
-from MotherCollection import *
 from Helper import *
 from copy import deepcopy
 
 class ScheduleCollection:
     REDIR_STR = 'redirected to other network'
-    TIME_HEAD_IDX = 3
     HOURS_IDX = 0
     MINUTES_IDX = 1
+    TIME_HEAD_IDX = 3
+    
     def __init__(self, filename):
         self._filename = filename
-        self._header, self._schedulesData = self.readFile()
+        self._header, self._schedulesData = Helper().readFile(self.getFilename())
         self._headerTime = self._header[self.TIME_HEAD_IDX]
         self._schedules = []
         for data in self.getSchedulesData():
@@ -21,16 +20,6 @@ class ScheduleCollection:
 
     def getFilename(self):
         return self._filename
-
-    def readFile(self):
-        with open(self.getFilename(), 'r', encoding='utf-8') as inFile:
-            lines = inFile.readlines()
-
-            header = [line.rstrip() for line in lines[:7] if line.strip()]
-
-            schedulesData = [line.strip().split(", ") for line in lines[7:] if line.strip()]
-
-        return header, schedulesData
     
     def setHeader(self, header):
         self._header = header
@@ -40,6 +29,13 @@ class ScheduleCollection:
 
     def setSchedules(self, schedules):
         self._schedules = schedules
+
+    def setHeaderTime(self, headerTime):
+        self.getHeader()[self.TIME_HEAD_IDX] = headerTime
+
+    def updateHeadersTime(self, minutesToAdd):
+        self.setHeaderTime(Helper().updateHours(self._headerTime, minutesToAdd))
+        self.getHeader
 
     def getHeader(self):
         return self._header
@@ -125,21 +121,3 @@ class ScheduleCollection:
 
 
         return newScheduleList, newDoctorsList
-
-
-schedules = ScheduleCollection('txt_files/testSet1/schedule10h00.txt')
-schedules.sortSchedules()
-
-doctors = DoctorCollection('txt_files/testSet1/doctors10h00.txt')
-doctors.sortDoctors()
-doctorsList = doctors.getDoctors()
-print(doctorsList)
-
-requests = MotherCollection('txt_files/testSet1/requests10h30.txt')
-requests.sortMothers()
-requestsList = requests.getMothers()
-print(requestsList)
-
-for app in schedules.updateSchedule(doctorsList, requestsList):
-    for elem in app:
-        print(elem)

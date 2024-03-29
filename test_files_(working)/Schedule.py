@@ -43,4 +43,4 @@ class Schedule:
         return str(self.getSchedule())
     
     def __str__(self):
-        return str(self.getSchedule())
+        return f'{Helper().intToTime(*self.getScheduleTime())}, {str(self.getMotherName())}, {self.getDoctorName()}'

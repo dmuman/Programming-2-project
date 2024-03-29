@@ -116,8 +116,8 @@ class ScheduleCollection:
                 appointment = Schedule(nextTime, motherName, self.REDIR_STR)
                 newScheduleList.append(appointment)
 
-        newScheduleList.sort(key=Schedule.sortSchedulesKeys)
+        newScheduleList.sort(key = Schedule.sortSchedulesKeys)
         newDoctorsList.sort(key = lambda x: x.getName())
 
 
-        return newScheduleList, newDoctorsList
+        return [newScheduleList, newDoctorsList]

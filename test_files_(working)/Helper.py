@@ -77,5 +77,17 @@ class Helper:
         return updatedHours
     
 #TODO
-    def writeFile():
-        pass
+    def writeFile(self, filename, header, data):
+        oldTimeInName = filename[-9:-4]
+        newTimeInName = self.updateHours(oldTimeInName, 30)
+        newFileName = f'{filename[0:-9]}{newTimeInName}.txt'
+        # return newFileName
+        with open(newFileName, 'w', encoding='utf-8-sig') as outFile:
+            for i in range(len(header)):
+                outFile.write(f'{header[i]}\n')
+
+            for i in range(len(data)):
+                if i != len(data)-1:
+                    outFile.write(f'{data[i]}\n')
+                else:
+                    outFile.write(f'{data[i]}')    

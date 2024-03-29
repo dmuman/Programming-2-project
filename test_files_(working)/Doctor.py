@@ -112,4 +112,8 @@ class Doctor:
         return str(self.getDoctor())
     
     def __str__(self):
-        return str(self.getDoctor())
+        if self.getNextFreeHours() == self.WKL_PAUSE:
+            return f'{str(self.getName())}, {str(self.getSkill())}, {self.getNextFreeHours()}, {str(self.getDailyMinutes())}, {Helper().intToTime(*self.getWeeklyHours())}'
+        else:
+            return f'{str(self.getName())}, {str(self.getSkill())}, {Helper().intToTime(*self.getNextFreeHours())}, {str(self.getDailyMinutes())}, {Helper().intToTime(*self.getWeeklyHours())}'
+            

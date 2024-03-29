@@ -1,32 +1,37 @@
 from DoctorCollection import DoctorCollection
 from MotherCollection import MotherCollection
 from ScheduleCollection import ScheduleCollection
+from Helper import Helper
 from sys import argv
 
-doctorsFileName = 'txt_files/testSet1/schedule10h00.txt'
-scheduleFileName = 'txt_files/testSet1/doctors10h00.txt'
-requestsFileName = 'txt_files/testSet1/requests10h30.txt'
+scheduleFileName = argv[1]
+doctorsFileName = argv[2]
+requestsFileName = argv[3]
 
 #TODO
 
-def plan(doctorsFileName, scheduleFileName, requestsFileName):
+def plan(scheduleFileName, doctorsFileName, requestsFileName):
     try:
-        schedules = ScheduleCollection(doctorsFileName)
+        
+        schedules = ScheduleCollection(scheduleFileName)
         schedules.sortSchedules()
+        schedules.updateHeadersTime(30)
 
-        doctors = DoctorCollection(scheduleFileName)
+        doctors = DoctorCollection(doctorsFileName)
         doctors.sortDoctors()
+        doctors.updateHeadersTime(30)
         doctorsList = doctors.getDoctors()
 
         requests = MotherCollection(requestsFileName)
         requests.sortMothers()
         requestsList = requests.getMothers()
 
-        for app in schedules.updateSchedule(doctorsList, requestsList):
-            for elem in app:
-                print(elem)
+        schedulesData, doctorsData = schedules.updateSchedule(doctorsList, requestsList)
 
-    except Exception:       #cathing and exception
+        Helper().writeFile(scheduleFileName, schedules.getHeader(), schedulesData)
+        Helper().writeFile(doctorsFileName, doctors.getHeader(), doctorsData)
+
+    except Exception:       #cathing an exception
             print("", end="")
 
-plan(doctorsFileName, scheduleFileName, requestsFileName)
+plan(scheduleFileName, doctorsFileName, requestsFileName)

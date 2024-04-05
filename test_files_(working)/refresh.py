@@ -11,6 +11,9 @@ requestsFileName = argv[3]
 #TODO
 
 def plan(scheduleFileName, doctorsFileName, requestsFileName):
+    """
+    Main function
+    """
     try:
         
         schedules = ScheduleCollection(scheduleFileName)
@@ -34,4 +37,5 @@ def plan(scheduleFileName, doctorsFileName, requestsFileName):
     except Exception:       #cathing an exception
             print("", end="")
 
+# executing the function
 plan(scheduleFileName, doctorsFileName, requestsFileName)

@@ -2,6 +2,9 @@ from Doctor import *
 from Helper import *
 
 class DoctorCollection:
+    """
+    Doctor collection class
+    """
     HOURS_IDX = 0
     MINUTES_IDX = 1
     TIME_HEAD_IDX = 3
@@ -16,13 +19,7 @@ class DoctorCollection:
             doctor = Doctor(name, skill, nextFreeHours, dailyMinutes, weeklyHours)
             self._doctors.append(doctor)
 
-    def getFilename(self):
-        return self._filename
-    
-    def updateHeadersTime(self, minutesToAdd):
-        self.setHeaderTime(Helper().updateHours(self._headerTime, minutesToAdd))
-        self.getHeader
-    
+    # setters
     def setHeader(self, header):
         self._header = header
 
@@ -35,6 +32,10 @@ class DoctorCollection:
     def setDoctors(self, doctors):
         self._doctors = doctors
 
+    # getters
+    def getFilename(self):
+        return self._filename
+    
     def getHeader(self):
         return self._header
     
@@ -47,5 +48,11 @@ class DoctorCollection:
     def getDoctors(self):
         return self._doctors
 
+    # updating header's time
+    def updateHeadersTime(self, minutesToAdd):
+        self.setHeaderTime(Helper().updateHours(self._headerTime, minutesToAdd))
+        self.getHeader
+    
+    # sorting doctors data by the keys from the Doctor class
     def sortDoctors(self):
         self.getDoctors().sort(key = Doctor.sortDoctorsKeys)

@@ -3,6 +3,9 @@ from Helper import *
 from copy import deepcopy
 
 class ScheduleCollection:
+    """
+    Schedule collection class
+    """
     REDIR_STR = 'redirected to other network'
     HOURS_IDX = 0
     MINUTES_IDX = 1
@@ -18,9 +21,7 @@ class ScheduleCollection:
             schedule = Schedule(scheduleTime, motherName, doctorName)
             self._schedules.append(schedule)
 
-    def getFilename(self):
-        return self._filename
-    
+    # setters
     def setHeader(self, header):
         self._header = header
 
@@ -33,10 +34,10 @@ class ScheduleCollection:
     def setHeaderTime(self, headerTime):
         self.getHeader()[self.TIME_HEAD_IDX] = headerTime
 
-    def updateHeadersTime(self, minutesToAdd):
-        self.setHeaderTime(Helper().updateHours(self._headerTime, minutesToAdd))
-        self.getHeader
-
+    # getters
+    def getFilename(self):
+        return self._filename
+    
     def getHeader(self):
         return self._header
 
@@ -46,12 +47,19 @@ class ScheduleCollection:
     def getSchedules(self):
         return self._schedules
 
+    def getHeaderTime(self):
+        return Helper().timeToInt(self._headerTime)
+    
+    # updating header's time
+    def updateHeadersTime(self, minutesToAdd):
+        self.setHeaderTime(Helper().updateHours(self._headerTime, minutesToAdd))
+        self.getHeader
+
+    # sorting schedules by the keys from the Schedule class
     def sortSchedules(self):
         self.getSchedules().sort(key = Schedule.sortSchedulesKeys)
     
-    def getHeaderTime(self):
-        return Helper().timeToInt(self._headerTime)
-
+    # updating schedule and doctors
     def updateSchedule(self, doctors, requests):
         newScheduleList = deepcopy(self.getSchedules())  # Create a deep copy of current schedules
         newScheduleList.clear()  # Clear the new schedule list

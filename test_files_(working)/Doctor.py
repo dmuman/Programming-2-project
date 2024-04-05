@@ -158,7 +158,8 @@ class Doctor:
 
         Ensures:
         String 'Weekly leave' if the doctor has the weekly leave,
-        List that represents the next free hours of the doctor otherwise,
+        List in the format of [HH, MM] that represents 
+        the next free hours of the doctor otherwise,
         using function from the Helper class.
         """
         if self._nextFreeHours == self.WKL_PAUSE:
@@ -181,7 +182,7 @@ class Doctor:
 
         Ensures:
         List that represents the weekly hours 
-        worked by the doctor,
+        worked by the doctor, in the format of [HH, MM],
         using function from the Helper class.
         """
         return Helper().timeToInt(self._weeklyHours)
@@ -315,8 +316,11 @@ class Doctor:
         self.setDailyMinutes(newDailyMinutes)
         self.setNextFreeHours(newFreeHours)
         self.setWeeklyHours(newWeeklyHours)
-        self.setDoctor([self.getName(), self.getSkill(), self.getNextFreeHours(), 
-                        self.getDailyMinutes(), self.getWeeklyHours()])
+        self.setDoctor([self.getName(), 
+                        self.getSkill(), 
+                        self.getNextFreeHours(), 
+                        self.getDailyMinutes(), 
+                        self.getWeeklyHours()])
     
     ############################################################################
     ################################## STRING ##################################

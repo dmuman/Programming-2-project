@@ -103,13 +103,17 @@ class Helper:
             with open(filename, 'r', encoding='utf-8-sig') as inFile:
                 # declaring variable for the time in the name
                 timeInName = filename[-9:-4]
+
                 # using readlines()
                 lines = inFile.readlines()
+
                 # declaring variable for the header
                 header = [line.rstrip() for line in 
                           lines[:self.getHeaderEndIdx()] if line.strip()]
+                
                 # declaring a variable for the time in the header
                 timeInHeader = header[self.getHeaderTimeIdx()]
+
                 # declaring a variable for the data
                 data = [line.strip().split(", ") for line in 
                         lines[self.getHeaderEndIdx():] if line.strip()]
@@ -150,8 +154,10 @@ class Helper:
         """
         # declaring variable for old time in name
         oldTimeInName = filename[-9:-4]
+
         # updating it
         newTimeInName = self.updateHours(oldTimeInName, 30)
+        
         # updating time in the filename
         newFileName = f'{filename[0:-9]}{newTimeInName}.txt'
 
@@ -240,17 +246,21 @@ class Helper:
         totalMinutes = None
         updatedHours = None
 
+        # in case updated hours' minutes are greater than 60
         if self.timeToInt(hoursToUpdate)[self.getMinutesIdx()] + minutesToAdd > 60:
             intHours = self.timeToInt(hoursToUpdate)[self.getHoursIdx()]
             intMinutes = self.timeToInt(hoursToUpdate)[self.getMinutesIdx()]
             totalMinutes = intHours * 60 + intMinutes + minutesToAdd
             updatedHours = self.intToTime((totalMinutes // 60), (totalMinutes % 60))
+        # in case updated hours' minutes are equal 60
         elif self.timeToInt(hoursToUpdate)[self.getMinutesIdx()] + minutesToAdd == 60:
             intHours = self.timeToInt(hoursToUpdate)[self.getHoursIdx()] + 1
             intMinutes = 0
             updatedHours = self.intToTime(intHours, intMinutes)
+        # otherwise
         else:
             intHours = self.timeToInt(hoursToUpdate)[self.getHoursIdx()]
             intMinutes = self.timeToInt(hoursToUpdate)[self.getMinutesIdx()] + minutesToAdd
             updatedHours = self.intToTime(intHours, intMinutes)
+
         return updatedHours

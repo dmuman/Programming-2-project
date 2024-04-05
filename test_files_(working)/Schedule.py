@@ -92,7 +92,7 @@ class Schedule:
         Gets the schedule time.
 
         Ensures:
-        List that represents the schedule time,
+        List in the format of [HH, MM], that represents the schedule time,
         using function from the Helper class.
         """
         return Helper().timeToInt(self._scheduleTime)

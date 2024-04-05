@@ -1,3 +1,8 @@
+# 2023-2024 Programação 2
+# Grupo 25
+# 59348 Dmytro Umanskyi
+# 62235 Duarte Alberto
+
 from Schedule import Schedule   # importing Schedule
 from Helper import Helper       # importing Helper
 from copy import deepcopy       # importing deepcopy
@@ -187,7 +192,20 @@ class ScheduleCollection:
 
     def updateSchedule(self, doctors, requests):
         """
-        
+        Updates the schedule and doctors, based on given list of
+        doctors and requests and on the previous schedule.
+        Assigns mothers to suitable doctors.
+        Redirecting to other network if necessary.
+
+        Requires:
+        doctors is a list that contains information
+        about previous doctors states. (DoctorCollection)
+        requests is a list that contains information
+        about requests. (MotherCollection)
+
+        Ensures:
+        list that contains a list with updated schedules (Schedule classes)
+        and a list with updated doctors (Doctor classes).
         """
         # create a deepcopy of current schedules and clear it
         newScheduleList = deepcopy(self.getSchedules())
@@ -282,35 +300,71 @@ class ScheduleCollection:
 
             # searching through doctors
             for doctor in doctors:
-                
-                if doctor.getSkill() >= 2 and riskLevel == 'high' and not doctor.getStatus():
+                # checking if the doctor's skill is high enough
+                # work with high risk level
+                # and if the doctor is not assigned 
+                if doctor.getSkill() >= 2 and riskLevel == 'high' and \
+                    not doctor.getStatus():
+                    # if there is such a doctor =>
+                    # he becomes suitable
                     suitableDoctor = doctor
+                    # breaking the search 
                     break
-                elif doctor.getSkill() >= 1 and riskLevel == 'low' and not doctor.getStatus():
+                # searching free doctors with basic skill
+                # and mother with low risk
+                elif doctor.getSkill() >= 1 and riskLevel == 'low' and \
+                    not doctor.getStatus():
+                    # assigning suitable doctor
                     suitableDoctor = doctor
+                    # breaking the search
                     break
 
+            # in case suitable doctor is found
             if suitableDoctor:
-                doctor.setStatus(True)  # Mark the doctor as assigned
+                # his status is now True (assigned)
+                doctor.setStatus(True)
                 
+                # assigning hours and doctor to the mother
                 assignedHours = suitableDoctor.getNextFreeHours()
                 assignedDoctor = suitableDoctor.getName()
 
-                if assignedHours[self.HOURS_IDX]*60 + assignedHours[self.MINUTES_IDX] < Helper().timeToInt(nextTime)[self.HOURS_IDX]*60 + Helper().timeToInt(nextTime)[self.MINUTES_IDX]:    #checks if the assigned hours are less than the updated time of the schedule
+                # checking if the assigned hours are less than the updated time of the schedule 
+                if assignedHours[self.HOURS_IDX]*60 + assignedHours[self.MINUTES_IDX] < \
+                    Helper().timeToInt(nextTime)[self.HOURS_IDX]*60 + \
+                        Helper().timeToInt(nextTime)[self.MINUTES_IDX]:
+                    # if so, assigned hours are now equal
+                    # to the nextTime
+                    # (new schedule's time)
                     assignedHours = Helper().timeToInt(nextTime)
 
-                appointment = Schedule(Helper().intToTime(assignedHours[self.HOURS_IDX], assignedHours[self.MINUTES_IDX]), motherName, assignedDoctor)
+                # making an appointment
+                appointment = Schedule(Helper().intToTime(assignedHours[self.HOURS_IDX], 
+                                                          assignedHours[self.MINUTES_IDX]), 
+                                                          motherName, 
+                                                          assignedDoctor)
+                # appending new schedules list
                 newScheduleList.append(appointment)
 
+                # updating suitable doctor's time
+                # by 20 minutes (appointment duration)
                 doctor.updateDoctorsTime(20)
+                # appending the new list of doctors 
                 newDoctorsList.append(doctor)
+            # If no suitable doctor found => redirect the mother
             else:
-                # If no suitable doctor found, redirect the request
+                # making schedule with the time of the new schedule
+                # and doctor's name that equals to the 
+                # redirection string
                 appointment = Schedule(nextTime, motherName, self.REDIR_STR)
+
+                # appending new appointments list
                 newScheduleList.append(appointment)
 
+        # sorting schedules with the keys from Schedule class
         newScheduleList.sort(key = Schedule.sortSchedulesKeys)
+        # sorting doctors by their names
+        # (alphabetical order)
         newDoctorsList.sort(key = lambda x: x.getName())
 
-
+        # returniing a list with updated schedules and doctors
         return [newScheduleList, newDoctorsList]

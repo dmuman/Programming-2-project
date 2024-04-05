@@ -1,3 +1,8 @@
+# 2023-2024 Programação 2
+# Grupo 25
+# 59348 Dmytro Umanskyi
+# 62235 Duarte Alberto
+
 from Helper import Helper # importing Helper
 
 class Doctor:
